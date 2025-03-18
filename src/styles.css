@@ -1,0 +1,221 @@
+@font-face {
+    font-family: quicksand;
+    src: url(./fonts/Quicksand-VariableFont_wght.ttf);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 7rem;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 75%;
+}
+
+.branding {
+    font-size: 2rem;
+}
+
+.navLinks input[type="radio"] {
+    display: none;
+}
+
+.navLinks label {
+    margin: 0 10px 0 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.navLinks label::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 68, 0, 0.4);
+    left: 0;
+    bottom: 0;
+    transform: scale(0, 1);
+    transition: transform 0.3s ease;
+}
+
+.navLinks label:hover::after {
+    background-color: rgba(255, 68, 0, 0.4);
+    transform: scale(1, 1);
+}
+
+.navLinks input[type="radio"]:checked+label::after {
+    background-color: orangered;
+    transform: scale(1, 1);
+}
+
+
+
+/* ************************************************************************* */
+.content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    font-family: "quicksand";
+}
+
+/* ********************************************************************************** */
+
+.homeImage {
+    height: 40rem;
+}
+
+.hero {
+    height: 200px;
+    width: 750px;
+}
+
+.homeHero {
+    font-family: "quicksand";
+    font-size: 1rem;
+    text-wrap: balance;
+}
+
+/* ********************************************************************************** */
+
+.formDiv {
+    border-right: 3px solid black;
+    height: 500px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "quicksand";
+    font-size: 1.5rem;
+}
+
+.infoDiv {
+    height: 500px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "quicksand";
+    font-size: 1.5rem;
+}
+
+.infoDiv h2 {
+    border-bottom: 2px solid orangered;
+}
+
+input {
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 30px;
+    width: 300px;
+    padding: 0 5px;
+}
+
+
+textarea {
+    resize: none;
+    height: 100px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+input:focus,
+textarea:focus {
+    border: 1px solid orangered;
+    outline: none;
+}
+
+/* For Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    appearance: textfield;
+}
+
+.submitBtn {
+    height: 30px;
+    width: 60px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: absolute;
+    margin-top: 10px;
+    left: 550px;
+}
+
+.submitBtn:hover {
+    background-color: rgba(255, 68, 0, 0.5);
+}
+
+.submitBtn:active {
+    background-color: rgba(255, 68, 0);
+}
+
+/* ********************************************************************************** */
+
+.menuDiv div {
+    padding-bottom: 10px;
+}
+
+.menuDiv h3 {
+    font-size: 2rem;
+    border-bottom: 2px solid orangered;
+}
+
+.menuDiv h5 {
+    font-size: 1.2rem;
+    padding: 10px 10px 2px 10px;
+}
+
+.menuDiv p {
+    font-size: 1rem;
+    padding: 0px 20px;
+}
+
+
+/* ********************************************************************************** */
+
+footer {
+    height: 7rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "quicksand";
+    font-size: 1rem;
+
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:active {
+    color: orangered
+}
