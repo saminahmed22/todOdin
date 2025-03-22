@@ -11,7 +11,7 @@
     <div class="sidebar">
         <div class="sidebarTitle">
             <h3>Projects</h3>
-            <button class="addProjectBtn">Create a project</button>
+            <button id="createProjectmodalBtn" class="addProjectBtn">Create a project</button>
         </div>
         <hr>
         <div class="projectList">
@@ -42,15 +42,15 @@
             <div class="projectTitleDiv">
                 <h1 class="ProjectTitle">Project One</h1>
                 <div class="actBtns">
-                    <button class="postponeBtn">Postpone</button>
-                    <button class="editBtn projectEditBtn">
+                    <button id="postponemodalBtn" class="postponeBtn">Postpone</button>
+                    <button id="editProjectmodalBtn" class="editBtn projectEditBtn">
                         <svg class="editBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                             viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                             <path
                                 d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
                         </svg>
                     </button>
-                    <button class="deleteBtn projectDeleteBtn">
+                    <button id="deleteProjectmodalBtn" class="deleteBtn projectDeleteBtn">
                         <svg class="deleteBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                             viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                             <path
@@ -69,7 +69,7 @@
                 porro in odio doloribus, recusandae vitae illo officia reprehenderit explicabo ex optio quidem quos
                 eveniet dicta quae pariatur?</p>
         </div>
-        <button class="addTodoBtn">Add a todo</button>
+        <button id="createTodomodalBtn" class="addTodoBtn">Add a todo</button>
         <div class="todoList">
             <div class="ToDo">
                 <div class="ToDoInit">
@@ -92,14 +92,14 @@
                         architecto, alias dolor reiciendis atque labore! Molestiae aut dolor error cumque magni ea
                         exercitationem quos doloremque!</p>
                     <div class="todoActBtns">
-                        <button class="todoEditBtn">
+                        <button id="editTodomodalBtn" class="todoEditBtn">
                             <svg class="editBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                                 <path
                                     d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
                             </svg>
                         </button>
-                        <button class="todoDeleteBtn">
+                        <button id="deleteTodomodalBtn" class="todoDeleteBtn">
                             <svg class="deleteBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                                 <path
@@ -131,14 +131,14 @@
                         architecto, alias dolor reiciendis atque labore! Molestiae aut dolor error cumque magni ea
                         exercitationem quos doloremque!</p>
                     <div class="todoActBtns">
-                        <button class="todoEditBtn">
+                        <button id="editTodomodalBtn" class="todoEditBtn">
                             <svg class="editBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                                 <path
                                     d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
                             </svg>
                         </button>
-                        <button class="todoDeleteBtn">
+                        <button id="deleteTodomodalBtn" class="todoDeleteBtn">
                             <svg class="deleteBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                                 <path
@@ -166,14 +166,14 @@
                 <div class="todoExpand">
                     <p class="todoDesc">Lorem ipsum</p>
                     <div class="todoActBtns">
-                        <button class="todoEditBtn">
+                        <button id="editTodomodalBtn" class="todoEditBtn">
                             <svg class="editBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                                 <path
                                     d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
                             </svg>
                         </button>
-                        <button class="todoDeleteBtn">
+                        <button id="deleteTodomodalBtn" class="todoDeleteBtn">
                             <svg class="deleteBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                                 <path
@@ -202,7 +202,7 @@
                     <p class="todoDesc">Lorem ipsum dolor sit wwwwwwwwwwwwwwww
                     </p>
                     <div class="todoActBtns">
-                        <button class="todoEditBtn">
+                        <button id="deleteTodomodal" id="editTodomodal" class="todoEditBtn">
                             <svg class="editBtnIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                                 <path
@@ -231,8 +231,9 @@
     <dialog class="createProjectmodal formModal">
         <form id="createProjectForm" action="">
             <h3>Create a project</h3>
-            <button type="button" class="cancelSubmit"><svg class="cancelBtnIcon" xmlns="http://www.w3.org/2000/svg"
-                    height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff">
+            <button type="button" class="cancelSubmit" id="createProjectmodalBtn"><svg class="cancelBtnIcon"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#ffffff">
                     <path
                         d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z" />
                 </svg></button>
@@ -253,7 +254,7 @@
                 <option value="low">Low</option>
             </select><br>
 
-            <button type="submit" class="createProjectSubmit submit">Submit</button>
+            <button type="submit" id="createProjectmodalBtn" class="createProjectSubmit submit">Submit</button>
         </form>
     </dialog>
 
@@ -261,8 +262,9 @@
     <dialog class="editProjectmodal formModal">
         <form id="editProjectForm" action="">
             <h3>Edit this project</h3>
-            <button type="button" class="cancelSubmit"><svg class="cancelBtnIcon" xmlns="http://www.w3.org/2000/svg"
-                    height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff">
+            <button type="button" class="cancelSubmit" id="editProjectmodalBtn"><svg class="cancelBtnIcon"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#ffffff">
                     <path
                         d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z" />
                 </svg></button>
@@ -279,7 +281,7 @@
                 <option value="low">Low</option>
             </select><br>
 
-            <button type="submit" class="editProjectSubmit submit">Submit</button>
+            <button type="submit" id="editProjectmodalBtn" class="editProjectSubmit submit">Submit</button>
         </form>
     </dialog>
 
@@ -288,13 +290,14 @@
     <dialog class="deleteProjectmodal formModal">
         <form id="deleteProjectForm" action="">
             <h3>Delete this Project?</h3>
-            <button type="button" class="cancelSubmit"><svg class="cancelBtnIcon" xmlns="http://www.w3.org/2000/svg"
-                    height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff">
+            <button type="button" class="cancelSubmit" id="deleteProjectmodalBtn"><svg class="cancelBtnIcon"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#ffffff">
                     <path
                         d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z" />
                 </svg></button>
             <h5>Project title</h5>
-            <button type="submit" class="deleteProjectSubmit submit">Delete</button>
+            <button type="submit" id="deleteProjectmodalBtn" class="deleteProjectSubmit submit">Delete</button>
         </form>
     </dialog>
 
@@ -302,8 +305,9 @@
     <dialog class="createTodomodal formModal">
         <form id="createTodoForm" action="">
             <h3>Create a todo</h3>
-            <button type="button" class="cancelSubmit"><svg class="cancelBtnIcon" xmlns="http://www.w3.org/2000/svg"
-                    height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff">
+            <button type="button" class="cancelSubmit" id="createTodomodalBtn"><svg class="cancelBtnIcon"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#ffffff">
                     <path
                         d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z" />
                 </svg></button>
@@ -314,7 +318,7 @@
             <label for="todoDescForm FormTitle">Todo description</label><br>
             <textarea type="text" name="todoName" id="todoDescForm" maxlength="300"></textarea><br>
 
-            <button type="submit" class="createTodoSubmit submit">Delete</button>
+            <button type="submit" id="createTodomodalBtn" class="createTodoSubmit submit">Delete</button>
         </form>
     </dialog>
     <!-- Modal for todo edit form -->
@@ -322,8 +326,9 @@
     <dialog class="editTodomodal formModal">
         <form id="editTodoForm" action="">
             <h3>Edit this todo</h3>
-            <button type="button" class="cancelSubmit"><svg class="cancelBtnIcon" xmlns="http://www.w3.org/2000/svg"
-                    height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff">
+            <button type="button" class="cancelSubmit" id="editTodomodalBtn"><svg class="cancelBtnIcon"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#ffffff">
                     <path
                         d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z" />
                 </svg></button>
@@ -333,7 +338,7 @@
             <label for="edittodoDescForm FormTitle">Todo description</label><br>
             <textarea type="text" name="editedtodoName" id="edittodoDescForm" maxlength="300"></textarea><br>
 
-            <button type="submit" class="editTodoSubmit submit">Submit</button>
+            <button type="submit" id="editTodomodalBtn" class="editTodoSubmit submit">Submit</button>
         </form>
     </dialog>
 
@@ -342,13 +347,14 @@
     <dialog class="deleteTodomodal formModal">
         <form id="deleteTodoForm" action="">
             <h3>Delete this todo?</h3>
-            <button type="button" class="cancelSubmit"><svg class="cancelBtnIcon" xmlns="http://www.w3.org/2000/svg"
-                    height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff">
+            <button type="button" class="cancelSubmit" id="deleteTodomodalBtn"><svg class="cancelBtnIcon"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#ffffff">
                     <path
                         d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z" />
                 </svg></button>
             <h5>Todo title</h5>
-            <button type="submit" class="deleteTodoSubmit submit">Submit</button>
+            <button type="submit" id="deleteTodomodalBtn" class="deleteTodoSubmit submit">Submit</button>
         </form>
     </dialog>
 
@@ -356,8 +362,9 @@
     <dialog class="postponemodal formModal">
         <form id="postpone" action="">
             <h3>Postpone the project</h3>
-            <button type="button" class="cancelSubmit"><svg class="cancelBtnIcon" xmlns="http://www.w3.org/2000/svg"
-                    height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff">
+            <button type="button" class="cancelSubmit" id="postponemodalBtn"><svg class="cancelBtnIcon"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#ffffff">
                     <path
                         d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z" />
                 </svg></button>
@@ -366,7 +373,7 @@
             <input type="date" name="postponeDate" id="postpone"><br>
 
 
-            <button type="submit" class="postponeSubmit submit">Submit</button>
+            <button type="submit" id="postponemodalBtn" class="postponeSubmit submit">Submit</button>
         </form>
     </dialog>
 
