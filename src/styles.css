@@ -220,6 +220,8 @@ main {
     font-size: 3.5rem;
     font-weight: 600;
     padding: 40px 0 0 80px;
+    width: 800px;
+    word-wrap: break-word;
 }
 
 .actBtns {
@@ -307,7 +309,13 @@ main {
 
 .ToDo {
     height: 50px;
-    width: 400px;
+    width: 440px;
+
+    min-height: 50px;
+    min-width: 440px;
+
+    /* height: fit-content;
+    width: fit-content; */
 
     border: 1px solid white;
     border-left: 3px solid green;
