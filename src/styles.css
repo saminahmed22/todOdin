@@ -52,6 +52,15 @@ input[type="checkbox"] {
     accent-color: green;
 }
 
+select {
+    background-color: var(--backgroundColorLight);
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    width: 80px;
+    padding-left: 5px;
+}
+
 .overlay {
     position: absolute;
     top: 0;
@@ -487,23 +496,13 @@ main {
     width: 400px;
 }
 
-
-.createProjectmodal select {
-    background-color: var(--backgroundColorLight);
-    color: white;
-    border-radius: 5px;
-    height: 30px;
-    width: 80px;
-    padding-left: 5px;
-}
-
 /* edit project form */
 .editProjectmodal {
     height: 380px;
     width: 400px;
 }
 
-.editProjectmodal select {
+select {
     background-color: var(--backgroundColorLight);
     color: white;
     border-radius: 5px;
@@ -548,13 +547,13 @@ main {
 
 /* Create Todo form */
 .createTodomodal {
-    height: 320px;
+    height: 370px;
     width: 380px;
 }
 
 /* Edit Todo form */
 .editTodomodal {
-    height: 320px;
+    height: 370px;
     width: 380px;
 }
 
