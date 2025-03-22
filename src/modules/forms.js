@@ -1,14 +1,16 @@
 const overlay = document.querySelector(".overlay")
 
-function showFrom(moduleClass){
+function showform(modalID){
 
-    const form = document.querySelector(`.${moduleClass}`)
+    const form = document.querySelector(`.${modalID}`)
+    console.log(form)
     const cancelBtn = form.querySelector(".cancelSubmit")
     // const submitBtn = form.querySelector(".")
-
+            
     form.show()
 
     overlay.style.display = "inline";
+
 
     cancelBtn.addEventListener("click", () => {
         form.close()
@@ -23,4 +25,4 @@ function showFrom(moduleClass){
     })
 }
 
-export {showFrom};
+export {showform};
