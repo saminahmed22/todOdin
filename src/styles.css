@@ -537,6 +537,11 @@ select {
     border-color: red;
 }
 
+.deleteProjectmodal button.submit:active {
+    color: red;
+    border-color: red;
+}
+
 .deleteProjectmodal .cancelBtnIcon:hover {
     fill: green;
 }
@@ -587,6 +592,11 @@ select {
 }
 
 .deleteTodomodal button.submit:hover {
+    color: red;
+    border-color: red;
+}
+
+.deleteTodomodal button.submit:active {
     color: red;
     border-color: red;
 }
