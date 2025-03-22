@@ -315,6 +315,13 @@
             <label for="todoDescForm FormTitle">Todo description</label><br>
             <textarea type="text" name="todoName" id="todoDescForm" maxlength="300"></textarea><br>
 
+            <label for="todoPriority FormTitle">Todo Priority</label>
+            <select name="todoPriority" id="todoPriority">
+                <option value="top">Top</option>
+                <option value="normal" selected>Normal</option>
+                <option value="low">Low</option>
+            </select><br>
+
             <button type="submit" id="createTodomodalBtn" class="createTodoSubmit submit">Delete</button>
         </form>
     </dialog>
@@ -334,6 +341,13 @@
 
             <label for="edittodoDescForm FormTitle">Todo description</label><br>
             <textarea type="text" name="editedtodoName" id="edittodoDescForm" maxlength="300"></textarea><br>
+
+            <label for="edittodoPriority FormTitle">Todo Priority</label>
+            <select name="editedtodoPriority" id="edittodoPriority">
+                <option value="top">Top</option>
+                <option value="normal" selected>Normal</option>
+                <option value="low">Low</option>
+            </select><br>
 
             <button type="submit" id="editTodomodalBtn" class="editTodoSubmit submit">Submit</button>
         </form>
