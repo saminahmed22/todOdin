@@ -3,219 +3,605 @@
     src: url(./fonts/Quicksand-VariableFont_wght.ttf);
 }
 
+:root {
+    --primaryColor: orange;
+    --primaryColorDark: rgb(194, 126, 0);
+    --background: rgba(13, 16, 23, 255);
+    --backgroundColorLight: rgba(18, 21, 28, 255);
+}
+
 * {
     padding: 0;
     margin: 0;
+    text-wrap: balance;
+    /* outline: 2px solid orangered; */
+}
+
+::-webkit-scrollbar {
+    width: .8rem;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--backgroundColorLight);
+    border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primaryColor);
+    border-radius: 100vw;
+    border: 2px solid var(--backgroundColorLight);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primaryColorDark);
+    border-radius: 100vw;
+    border: 2px solid var(--backgroundColorLight);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: var(--primaryColorDark);
+    border-radius: 100vw;
+    border: 2px solid var(--backgroundColorLight);
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+input[type="checkbox"] {
+    accent-color: green;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.664);
+    display: none;
 }
 
 body {
     min-height: 100vh;
-    width: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
-}
-
-header {
-    height: 7rem;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    grid-row: 1 / 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 75%;
-}
-
-.branding {
-    font-size: 2rem;
-}
-
-.navLinks input[type="radio"] {
-    display: none;
-}
-
-.navLinks label {
-    margin: 0 10px 0 10px;
-    font-size: 1.3rem;
-    cursor: pointer;
+    font-family: quicksand;
+    overflow: hidden;
     position: relative;
 }
 
-.navLinks label::after {
-    content: '';
+.editBtn,
+.deleteBtn,
+.postponeBtn,
+.todoEditBtn,
+.todoDeleteBtn,
+.cancelSubmit {
+    background: transparent;
+    border: none;
+}
+
+.cancelSubmit {
     position: absolute;
+    top: 25px;
+    right: 30px;
+    border: none;
+}
+
+.cancelBtnIcon:hover {
+    fill: crimson;
+}
+
+.cancelBtnIcon:active {
+    fill: red;
+}
+
+/* ********************************************************************************************************* */
+header {
+    height: 5rem;
     width: 100%;
-    height: 2px;
-    background-color: rgba(255, 68, 0, 0.4);
-    left: 0;
-    bottom: 0;
-    transform: scale(0, 1);
-    transition: transform 0.3s ease;
+    background-color: var(--background);
+    display: none;
 }
 
-.navLinks label:hover::after {
-    background-color: rgba(255, 68, 0, 0.4);
-    transform: scale(1, 1);
-}
-
-.navLinks input[type="radio"]:checked+label::after {
-    background-color: orangered;
-    transform: scale(1, 1);
-}
-
-
-
-/* ************************************************************************* */
-.content {
+.contents {
     flex: 1;
     width: 100%;
+    background-color: var(--background);
+    display: grid;
+    grid-template-columns: 2.5fr 7.5fr;
+}
+
+/* *************************************************************** */
+
+.sidebar {
+    grid-column: 1 / 2;
+    background-color: var(--background);
+    border-right: 5px solid var(--primaryColor);
+}
+
+.sidebarTitle {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    font-family: "quicksand";
+    justify-content: space-between;
 }
 
-/* ********************************************************************************** */
-
-.homeImage {
-    height: 40rem;
+.sidebarTitle h3 {
+    color: var(--primaryColor);
+    font-size: 2.5rem;
+    font-weight: 500;
+    padding: 15px 0 0 30px;
 }
 
-.hero {
-    height: 200px;
-    width: 750px;
-}
-
-.homeHero {
-    font-family: "quicksand";
-    font-size: 1rem;
-    text-wrap: balance;
-}
-
-/* ********************************************************************************** */
-
-.formDiv {
-    border-right: 3px solid black;
-    height: 500px;
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "quicksand";
-    font-size: 1.5rem;
-}
-
-.infoDiv {
-    height: 500px;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: "quicksand";
-    font-size: 1.5rem;
-}
-
-.infoDiv h2 {
-    border-bottom: 2px solid orangered;
-}
-
-input {
-    border: 1px solid black;
-    border-radius: 5px;
+.addProjectBtn {
     height: 30px;
-    width: 300px;
-    padding: 0 5px;
-}
-
-
-textarea {
-    resize: none;
-    height: 100px;
-    width: 300px;
-    border: 1px solid black;
+    width: 120px;
+    margin: 50px 20px 0 0;
+    border: 1px solid var(--primaryColor);
     border-radius: 5px;
-    padding: 0 5px;
+    background: transparent;
+    color: var(--primaryColor);
 }
 
-input:focus,
-textarea:focus {
-    border: 1px solid orangered;
-    outline: none;
+.sidebarTitle button:hover {
+    color: white;
+    border-color: white;
 }
 
-/* For Chrome, Safari, Edge, and Opera */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+.sidebar hr {
+    margin: 20px auto;
+    width: 450px;
 }
 
-/* For Firefox */
-input[type="number"] {
-    appearance: textfield;
+.projectList {
+    width: 400px;
+    margin: 0 auto;
+    height: 85vh;
+    padding-left: 30px;
+    position: relative;
+    overflow: auto;
+    overflow-x: hidden;
 }
 
-.submitBtn {
-    height: 30px;
-    width: 60px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    position: absolute;
-    margin-top: 10px;
-    left: 550px;
+.projectSidebar {
+    color: white;
+    margin: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
 }
 
-.submitBtn:hover {
-    background-color: rgba(255, 68, 0, 0.5);
+.projectSidebar:hover {
+    color: var(--primaryColor);
 }
 
-.submitBtn:active {
-    background-color: rgba(255, 68, 0);
+li {
+    color: white;
 }
 
-/* ********************************************************************************** */
-
-.menuDiv div {
-    padding-bottom: 10px;
-}
-
-.menuDiv h3 {
-    font-size: 2rem;
-    border-bottom: 2px solid orangered;
-}
-
-.menuDiv h5 {
+.projectSidebar h5 {
     font-size: 1.2rem;
-    padding: 10px 10px 2px 10px;
+    font-weight: 500;
 }
 
-.menuDiv p {
+.pirorityMark {
+    height: 10px;
+    width: 10px;
+    border-radius: 100%;
+}
+
+/* remove */
+#ProjectOne div {
+    background-color: green;
+}
+
+#ProjectTwo div {
+    background-color: yellow;
+}
+
+#ProjectThree div {
+    background-color: red;
+}
+
+/* *************************************************************** */
+
+main {
+    grid-column: 2/3;
+    background-color: var(--background);
+}
+
+.projectTitleDiv {
+    display: flex;
+}
+
+.ProjectTitle {
+    color: var(--primaryColor);
+    font-size: 3.5rem;
+    font-weight: 600;
+    padding: 40px 0 0 80px;
+}
+
+.actBtns {
+    position: absolute;
+    right: 100px;
+    top: 50px;
+    display: flex;
+    gap: 50px;
+}
+
+
+
+
+
+.postponeBtn {
+    height: 30px;
+    width: 80px;
+    border: 1px solid var(--primaryColor);
+    color: var(--primaryColor);
+    border-radius: 5px;
+}
+
+.postponeBtn:hover {
+    border-color: white;
+    color: white;
+}
+
+.editBtnIcon:hover {
+    fill: rgb(44, 201, 253);
+}
+
+.editBtnIcon:active {
+    fill: rgb(0, 108, 145);
+}
+
+.deleteBtnIcon:hover {
+    fill: crimson;
+}
+
+.deleteBtnIcon:active {
+    fill: red;
+}
+
+.projectDate,
+.projectDeadineDate {
+    color: white;
+    padding: 5px 200px;
+    font-weight: 500;
+}
+
+.projectDeadineDate {
+    color: crimson;
+}
+
+.projectDesc {
+    color: white;
+    margin: 40px 120px;
+}
+
+.addTodoBtn {
+    height: 30px;
+    width: 100px;
+    border: 1px solid var(--primaryColor);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--primaryColor);
+    position: absolute;
+    right: 300px;
+
+}
+
+.addTodoBtn:hover {
+    color: white;
+    border-color: white;
+}
+
+.todoList {
+    height: 500px;
+    width: 1000px;
+    /* border: 1px solid white; */
+    margin: 100px 200px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.ToDo {
+    height: 50px;
+    width: 400px;
+
+    border: 1px solid white;
+    border-left: 3px solid green;
+    border-radius: 5px;
+
+    margin: 20px 20px 0 20px;
+
+    color: white;
+
+    overflow: hidden;
+    transition: height 0.4s ease-out, width 0.3s ease-out;
+
+}
+
+.ToDo.expanded {
+    height: auto;
+    height: calc-size(fit-content, size);
+    width: auto;
+    width: calc-size(fit-content, size);
+}
+
+.ToDoInit {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    min-width: 400px;
+}
+
+.dragIcon {
+    flex: 0 0 24px;
+    margin-right: 15px;
+}
+
+.dragIcon:hover {
+    cursor: grab;
+}
+
+.dropIcon {
+    flex: 0 0 24px;
+    margin-right: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dropIcon:hover {
+    cursor: pointer;
+}
+
+.dropIcon.rotated {
+    transform: rotate(180deg);
+    fill: var(--primaryColor)
+}
+
+
+
+.dragIcon:active,
+.dropIcon:active {
+    fill: var(--primaryColor);
+}
+
+.todoTitle {
     font-size: 1rem;
-    padding: 0px 20px;
+    font-weight: 400;
+    margin: 10px 40px 10px 0;
+}
+
+#todoCheck {
+    margin-right: 40px;
+    margin-left: auto;
+}
+
+.ToDo.dragging {
+    opacity: .5;
+}
+
+.todoExpand {
+    position: relative;
+    /* display: none; */
 }
 
 
-/* ********************************************************************************** */
+.todoDesc {
+    padding: 5px 80px;
+}
+
+.todoActBtns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    padding: 10px 50px 10px 0;
+}
+
+/* *************************************************************** */
+
+/* forms universal css */
+
+.formModal {
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    background-color: var(--background);
+    padding: 20px 0 20px 20px;
+    border: none;
+}
+
+.formModal h3 {
+    color: var(--primaryColor);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.formModal label {
+    color: white;
+    /* padding: 20px; */
+    margin-left: 10px;
+}
+
+.formModal input,
+.formModal textarea {
+    margin: 10px 0 20px 20px;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid var(--primaryColor);
+    width: 300px;
+    color: white;
+    background-color: var(--backgroundColorLight);
+}
+
+.formModal input:focus,
+.formModal textarea:focus {
+    outline: 2px solid var(--primaryColor);
+
+}
+
+.formModal input {
+    height: 20px;
+}
+
+.formModal textarea {
+    height: 80px;
+    resize: none;
+}
+
+.formModal button.submit {
+    border: 1px solid var(--primaryColor);
+    border-radius: 5px;
+    color: white;
+    background-color: transparent;
+    height: 30px;
+    width: 80px;
+    position: absolute;
+    right: 40px;
+    bottom: 25px;
+}
+
+.formModal button.submit:hover {
+    border-color: green;
+    color: green;
+}
+
+.formModal button.submit:active {
+    border-color: rgb(0, 77, 0);
+    color: rgb(0, 77, 0);
+}
+
+/* Create Project from */
+.createProjectmodal {
+    height: 440px;
+    width: 400px;
+}
+
+
+.createProjectmodal select {
+    background-color: var(--backgroundColorLight);
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    width: 80px;
+    padding-left: 5px;
+}
+
+/* edit project form */
+.editProjectmodal {
+    height: 380px;
+    width: 400px;
+}
+
+.editProjectmodal select {
+    background-color: var(--backgroundColorLight);
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    width: 80px;
+    padding-left: 5px;
+}
+
+/* delete project modal */
+
+.deleteProjectmodal {
+    min-height: 150px;
+    height: fit-content;
+    width: 350px;
+
+    position: absolute;
+    top: 35%;
+    left: 45%;
+}
+
+.deleteProjectmodal h5 {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 300;
+    padding: 0 20px 60px 20px;
+    text-wrap: wrap;
+    word-wrap: break-word;
+}
+
+.deleteProjectmodal button.submit:hover {
+    color: red;
+    border-color: red;
+}
+
+.deleteProjectmodal .cancelBtnIcon:hover {
+    fill: green;
+}
+
+.deleteProjectmodal .cancelBtnIcon:active {
+    fill: rgb(0, 77, 0);
+}
+
+/* Create Todo form */
+.createTodomodal {
+    height: 320px;
+    width: 380px;
+}
+
+/* Edit Todo form */
+.editTodomodal {
+    height: 320px;
+    width: 380px;
+}
+
+/* Delete Todo modal */
+.deleteTodomodal {
+
+    min-height: 150px;
+    height: fit-content;
+    width: 350px;
+
+    position: absolute;
+    top: 35%;
+    left: 45%;
+}
+
+.deleteTodomodal h5 {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 300;
+    padding: 0 20px 60px 20px;
+    text-wrap: wrap;
+    word-wrap: break-word;
+}
+
+.deleteTodomodal .cancelBtnIcon:hover {
+    fill: green;
+}
+
+.deleteTodomodal .cancelBtnIcon:active {
+    fill: rgb(0, 77, 0);
+}
+
+.deleteTodomodal button.submit:hover {
+    color: red;
+    border-color: red;
+}
+
+
+
+/* postpone form */
+.postponemodal {
+    height: 160px;
+    width: 350px;
+}
+
+.postponemodal input[type="date"] {
+    width: 150px;
+}
+
+/* *************************************************************** */
+
 
 footer {
-    height: 7rem;
+    display: none;
+    height: 5rem;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "quicksand";
-    font-size: 1rem;
-
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-a:active {
-    color: orangered
+    background-color: var(--background);
 }
