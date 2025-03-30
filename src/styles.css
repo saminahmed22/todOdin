@@ -4,11 +4,32 @@
 }
 
 :root {
-    --primaryColor: orange;
-    --primaryColorDark: rgb(194, 126, 0);
+    --primaryColorScheme: orange;
+    --primaryColorDarkScheme: rgb(194, 126, 0);
+    --primaryTextColor: white;
     --background: rgba(13, 16, 23, 255);
     --backgroundColorLight: rgba(18, 21, 28, 255);
 }
+
+.lightMode {
+    --primaryColorScheme: rgb(214, 142, 7);
+    --primaryColorDarkScheme: rgb(194, 126, 0);
+    --primaryTextColor: black;
+    --background: rgb(255, 236, 199);
+    --backgroundColorLight: white;
+}
+
+.themeBtn {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+}
+
+.themeBtnIcon {
+    scale: 1.4;
+}
+
+
 
 * {
     padding: 0;
@@ -23,30 +44,31 @@
 
 ::-webkit-scrollbar-track {
     background: var(--backgroundColorLight);
+    display: none;
     border-radius: 100vw;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primaryColor);
+    background: var(--primaryColorScheme);
     border-radius: 100vw;
     border: 2px solid var(--backgroundColorLight);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primaryColorDark);
+    background: var(--primaryColorDarkScheme);
     border-radius: 100vw;
     border: 2px solid var(--backgroundColorLight);
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background: var(--primaryColorDark);
+    background: var(--primaryColorDarkScheme);
     border-radius: 100vw;
     border: 2px solid var(--backgroundColorLight);
 }
 
-::-webkit-calendar-picker-indicator {
+/* ::-webkit-calendar-picker-indicator {
     filter: invert(1);
-}
+} */
 
 input[type="checkbox"] {
     accent-color: green;
@@ -54,7 +76,7 @@ input[type="checkbox"] {
 
 select {
     background-color: var(--backgroundColorLight);
-    color: white;
+    color: var(--primaryTextColor);
     border-radius: 5px;
     height: 30px;
     width: 80px;
@@ -79,19 +101,26 @@ body {
     font-family: quicksand;
     overflow: hidden;
     position: relative;
+
+
+    background-color: var(--background);
+    display: grid;
+    grid-template-columns: minmax(250px, 2.5fr) minmax(300px, 7.5fr);
+
+    transition: background-color .5s ease;
 }
 
-.editBtn,
-.deleteBtn,
-.postponeBtn,
-.todoEditBtn,
-.todoDeleteBtn,
-.cancelSubmit {
+button {
     background: transparent;
     border: none;
 }
 
-.cancelSubmit {
+svg {
+    fill: var(--primaryTextColor);
+}
+
+
+.cancelBtn {
     position: absolute;
     top: 25px;
     right: 30px;
@@ -107,63 +136,61 @@ body {
 }
 
 /* ********************************************************************************************************* */
-header {
-    height: 5rem;
-    width: 100%;
-    background-color: var(--background);
-    display: none;
-}
 
-.contents {
-    flex: 1;
-    width: 100%;
-    background-color: var(--background);
-    display: grid;
-    grid-template-columns: 2.5fr 7.5fr;
+
+.CTAText {
+    align-self: center;
+    margin: auto;
+    color: var(--primaryColorScheme);
+    font-size: 1.2rem;
+    font-weight: 450;
 }
 
 /* *************************************************************** */
 
 .sidebar {
     grid-column: 1 / 2;
-    background-color: var(--background);
-    border-right: 5px solid var(--primaryColor);
+    border-right: 5px solid var(--primaryColorScheme);
 }
 
 .sidebarTitle {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: 5fr 5fr;
 }
 
 .sidebarTitle h3 {
-    color: var(--primaryColor);
+    color: var(--primaryColorScheme);
     font-size: 2.5rem;
     font-weight: 500;
     padding: 15px 0 0 30px;
+    width: 100%;
 }
 
 .addProjectBtn {
     height: 30px;
     width: 120px;
-    margin: 50px 20px 0 0;
-    border: 1px solid var(--primaryColor);
+    justify-self: end;
+    margin: 20px 20px 0 0;
+    border: 1px solid var(--primaryColorScheme);
     border-radius: 5px;
     background: transparent;
-    color: var(--primaryColor);
+    color: var(--primaryColorScheme);
 }
 
 .sidebarTitle button:hover {
-    color: white;
-    border-color: white;
+    color: var(--primaryTextColor);
+    border-color: var(--primaryTextColor);
 }
 
 .sidebar hr {
-    margin: 20px auto;
+    grid-column: 1 / 2;
+    margin: 0 auto 20px auto;
     width: 450px;
+    border-color: var(--primaryTextColor);
 }
 
 .projectList {
-    width: 400px;
+    width: minmax(200px, 400px);
     margin: 0 auto;
     height: 85vh;
     padding-left: 30px;
@@ -173,7 +200,7 @@ header {
 }
 
 .projectSidebar {
-    color: white;
+    color: var(--primaryTextColor);
     margin: 15px;
     display: flex;
     justify-content: space-between;
@@ -182,11 +209,11 @@ header {
 }
 
 .projectSidebar:hover {
-    color: var(--primaryColor);
+    color: var(--primaryColorScheme);
 }
 
 li {
-    color: white;
+    color: var(--primaryTextColor);
 }
 
 .projectSidebar h5 {
@@ -205,31 +232,20 @@ li {
     background-color: green;
 }
 
-#ProjectTwo div {
-    background-color: yellow;
-}
-
-#ProjectThree div {
-    background-color: red;
-}
-
 /* *************************************************************** */
 
 main {
     grid-column: 2/3;
-    background-color: var(--background);
-}
-
-.projectTitleDiv {
     display: flex;
+    flex-direction: column;
 }
 
 .ProjectTitle {
-    color: var(--primaryColor);
+    color: var(--primaryColorScheme);
     font-size: 3.5rem;
     font-weight: 600;
     padding: 40px 0 0 80px;
-    width: 800px;
+    width: 700px;
     word-wrap: break-word;
 }
 
@@ -241,21 +257,17 @@ main {
     gap: 50px;
 }
 
-
-
-
-
 .postponeBtn {
     height: 30px;
     width: 80px;
-    border: 1px solid var(--primaryColor);
-    color: var(--primaryColor);
+    border: 1px solid var(--primaryColorScheme);
+    color: var(--primaryColorScheme);
     border-radius: 5px;
 }
 
 .postponeBtn:hover {
-    border-color: white;
-    color: white;
+    border-color: var(--primaryTextColor);
+    color: var(--primaryTextColor);
 }
 
 .editBtnIcon:hover {
@@ -275,42 +287,42 @@ main {
 }
 
 .projectDate,
-.projectDeadineDate {
-    color: white;
+.projectDeadlineDate {
+    color: var(--primaryTextColor);
     padding: 5px 200px;
     font-weight: 500;
 }
 
-.projectDeadineDate {
+.projectDeadlineDate {
     color: crimson;
 }
 
 .projectDesc {
-    color: white;
+    color: var(--primaryTextColor);
     margin: 40px 120px;
+    width: 900px;
 }
 
 .addTodoBtn {
     height: 30px;
     width: 100px;
-    border: 1px solid var(--primaryColor);
+    border: 1px solid var(--primaryColorScheme);
     border-radius: 5px;
     background: transparent;
-    color: var(--primaryColor);
+    color: var(--primaryColorScheme);
     position: absolute;
     right: 300px;
 
 }
 
 .addTodoBtn:hover {
-    color: white;
-    border-color: white;
+    color: var(--primaryTextColor);
+    border-color: var(--primaryTextColor);
 }
 
 .todoList {
-    height: 500px;
+    height: 400px;
     width: 1000px;
-    /* border: 1px solid white; */
     margin: 100px 200px;
     overflow: auto;
     overflow-x: hidden;
@@ -323,11 +335,7 @@ main {
     min-height: 50px;
     min-width: 440px;
 
-    /* height: fit-content;
-    width: fit-content; */
-
     border: 1px solid white;
-    border-left: 3px solid green;
     border-radius: 5px;
 
     margin: 20px 20px 0 20px;
@@ -374,14 +382,14 @@ main {
 
 .dropIcon.rotated {
     transform: rotate(180deg);
-    fill: var(--primaryColor)
+    fill: var(--primaryColorScheme)
 }
 
 
 
 .dragIcon:active,
 .dropIcon:active {
-    fill: var(--primaryColor);
+    fill: var(--primaryColorScheme);
 }
 
 .todoTitle {
@@ -430,14 +438,14 @@ main {
 }
 
 .formModal h3 {
-    color: var(--primaryColor);
+    color: var(--primaryColorScheme);
     font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 30px;
 }
 
 .formModal label {
-    color: white;
+    color: var(--primaryTextColor);
     /* padding: 20px; */
     margin-left: 10px;
 }
@@ -447,15 +455,15 @@ main {
     margin: 10px 0 20px 20px;
     padding: 5px;
     border-radius: 8px;
-    border: 1px solid var(--primaryColor);
+    border: 1px solid var(--primaryColorScheme);
     width: 300px;
-    color: white;
+    color: var(--primaryTextColor);
     background-color: var(--backgroundColorLight);
 }
 
 .formModal input:focus,
 .formModal textarea:focus {
-    outline: 2px solid var(--primaryColor);
+    outline: 2px solid var(--primaryColorScheme);
 
 }
 
@@ -469,9 +477,9 @@ main {
 }
 
 .formModal button.submit {
-    border: 1px solid var(--primaryColor);
+    border: 1px solid var(--primaryColorScheme);
     border-radius: 5px;
-    color: white;
+    color: var(--primaryTextColor);
     background-color: transparent;
     height: 30px;
     width: 80px;
@@ -491,29 +499,29 @@ main {
 }
 
 /* Create Project from */
-.createProjectmodal {
+.createProjectModal {
     height: 440px;
     width: 400px;
 }
 
 /* edit project form */
-.editProjectmodal {
+.editProjectModal {
     height: 380px;
     width: 400px;
 }
 
 select {
     background-color: var(--backgroundColorLight);
-    color: white;
+    color: var(--primaryTextColor);
     border-radius: 5px;
     height: 30px;
     width: 80px;
     padding-left: 5px;
 }
 
-/* delete project modal */
+/* delete project Modal */
 
-.deleteProjectmodal {
+.deleteProjectModal {
     min-height: 150px;
     height: fit-content;
     width: 350px;
@@ -523,8 +531,8 @@ select {
     left: 45%;
 }
 
-.deleteProjectmodal h5 {
-    color: white;
+.deleteProjectModal h5 {
+    color: var(--primaryTextColor);
     font-size: 1.3rem;
     font-weight: 300;
     padding: 0 20px 60px 20px;
@@ -532,38 +540,38 @@ select {
     word-wrap: break-word;
 }
 
-.deleteProjectmodal button.submit:hover {
+.deleteProjectModal button.submit:hover {
     color: red;
     border-color: red;
 }
 
-.deleteProjectmodal button.submit:active {
+.deleteProjectModal button.submit:active {
     color: red;
     border-color: red;
 }
 
-.deleteProjectmodal .cancelBtnIcon:hover {
+.deleteProjectModal .cancelBtnIcon:hover {
     fill: green;
 }
 
-.deleteProjectmodal .cancelBtnIcon:active {
+.deleteProjectModal .cancelBtnIcon:active {
     fill: rgb(0, 77, 0);
 }
 
 /* Create Todo form */
-.createTodomodal {
+.createTodoModal {
     height: 370px;
     width: 380px;
 }
 
 /* Edit Todo form */
-.editTodomodal {
+.editTodoModal {
     height: 370px;
     width: 380px;
 }
 
-/* Delete Todo modal */
-.deleteTodomodal {
+/* Delete Todo Modal */
+.deleteTodoModal {
 
     min-height: 150px;
     height: fit-content;
@@ -574,8 +582,8 @@ select {
     left: 45%;
 }
 
-.deleteTodomodal h5 {
-    color: white;
+.deleteTodoModal h5 {
+    color: var(--primaryTextColor);
     font-size: 1.3rem;
     font-weight: 300;
     padding: 0 20px 60px 20px;
@@ -583,20 +591,20 @@ select {
     word-wrap: break-word;
 }
 
-.deleteTodomodal .cancelBtnIcon:hover {
+.deleteTodoModal .cancelBtnIcon:hover {
     fill: green;
 }
 
-.deleteTodomodal .cancelBtnIcon:active {
+.deleteTodoModal .cancelBtnIcon:active {
     fill: rgb(0, 77, 0);
 }
 
-.deleteTodomodal button.submit:hover {
+.deleteTodoModal button.submit:hover {
     color: red;
     border-color: red;
 }
 
-.deleteTodomodal button.submit:active {
+.deleteTodoModal button.submit:active {
     color: red;
     border-color: red;
 }
@@ -604,21 +612,18 @@ select {
 
 
 /* postpone form */
-.postponemodal {
+.postponeModal {
     height: 160px;
     width: 350px;
 }
 
-.postponemodal input[type="date"] {
+.postponeModal input[type="date"] {
     width: 150px;
 }
 
 /* *************************************************************** */
 
 
-footer {
-    display: none;
-    height: 5rem;
-    width: 100%;
-    background-color: var(--background);
+.selectedProject {
+    color: var(--primaryColorScheme);
 }
