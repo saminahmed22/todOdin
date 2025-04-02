@@ -21,7 +21,6 @@ let selectedProjectID = null;
 
 
 function createProject(){
-    console.log("triggered in frist click")
     projectCreateModal.show();
     overlayDiv.style.display = "inline"
     
@@ -217,7 +216,6 @@ function postpone(){
 }
 
 function postponeSubmission(e, currentDeadline){
-    console.log(`selectedProjectID in postponeSubmission ${selectedProjectID}`)
     e.preventDefault();
 
     const projectMap =  deSerialization(getLocalStorage(selectedProjectID))
@@ -225,8 +223,6 @@ function postponeSubmission(e, currentDeadline){
     const formData = new FormData(e.target);
     const formValues = new Map(formData.entries());
 
-    console.log("form values")
-    console.log(formValues)
     const postponeDate = new Date(formValues.get("postponeDate")).toISOString();
 
     const diff = differenceInDays(postponeDate, currentDeadline)
@@ -268,7 +264,6 @@ function loadProjectList(){
             projectIDs.push(ID)
         }
     }
-    console.log("%cmight be a issue here at project sort sidebar", "color:orange")
     // sort projectIDs array into reverse chronological order
     projectIDs.sort((a, b) => {
         const projectA = deSerialization(getLocalStorage(a));
@@ -338,7 +333,6 @@ function projectListListener(){
                 div.classList.add("selectedProject")
             }
             selectedProjectID = div.id.slice(0, -4);
-            console.log(`selectedProjectID in project listener ${selectedProjectID}`)
             document.querySelector("main").style.display = "block";
 
             // enable childrens in main and disable cta text
@@ -442,7 +436,6 @@ function loadProjectMain(){
     projectDescMain.textContent = desc;
     creationDateMain.textContent = createDateModified;
     deadlineDateMain.textContent = deadlineDateModified;
-    console.log(`selectedProjectID in load project main ${selectedProjectID}`)
 }
 
 // ************************************************************************************

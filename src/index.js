@@ -226,15 +226,12 @@ document.addEventListener("click", (event) => {
         
     }
     else if(event.target.closest(".editProjectBtn")){
-        console.log("%cEdit project Event Triggered", "color:orange")
         editProject();
     }
     else if(event.target.closest(".deleteProjectBtn")){
-        console.log("%cDelete project Event Triggered", "color:orange")
         deleteProject();
     }
     else if(event.target.matches(".postponeBtn")){
-        console.log("%cPostpone project Event Triggered", "color:orange")
         postpone();
     }
 
@@ -254,7 +251,6 @@ document.addEventListener("click", (event) => {
 
 
 
-console.log("%cmight be issue at check box listener", "color:orange")
 document.addEventListener("change", (e) => {
     if(e.target.matches("input[type='checkbox']")){
 

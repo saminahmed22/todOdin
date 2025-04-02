@@ -21,10 +21,8 @@ function loadTodos(){
     projectMap = deSerialization(getLocalStorage(selectedProjectID))
     sortTodos()
 
-    console.log(projectMap)
 
     todoList = projectMap.get("todos");
-    console.log(todoList)
 
     let todoIDs = Array.from(todoList.keys()); 
 
@@ -41,7 +39,6 @@ function loadTodos(){
     // })
 
     // exandedDivs.forEach(div => {
-    //     console.log(`Extended div id: ${div}`)
     // })
 
 
@@ -56,7 +53,6 @@ function loadTodos(){
         const todoDiv = document.querySelector(".ToDo").cloneNode(true)
         todoDiv.classList.add(todoID)
         todoDiv.id = todoID
-        // console.log(`TODO DIV ID ${todoDiv.id}`)
 
         // if(exandedDivs.includes(todoID)){
         //     todoDiv.classList.add("expanded")
@@ -64,7 +60,6 @@ function loadTodos(){
 
 
         const todoObject = todoList.get(todoID)
-        console.log(`TODO OBJECT: ${JSON.stringify(todoObject)}`)
 
         const todoTitle = todoObject.title
         const todoDesc = todoObject.desc
@@ -167,7 +162,6 @@ function sortTodos(){
 
 
 function createTodo(){
-    console.log("%cTodo Event Triggered", "color:orange")
     todoCreateModal.show()
     overlayDiv.style.display = "inline"
 
@@ -197,11 +191,8 @@ function createTodoSubmission(e){
     const todoPriority = formValues.get("todoPriority");
 
     const TodoListMap = projectMap.get("todos")
-    console.log(`TodoListMap size ${TodoListMap.size}`)
 
     const createTodoID = `Todo_${TodoListMap.size + 1}`;
-    console.log(`Todo ID  = ${createTodoID}`)
-    console.log("might be a problem here with id number")
 
     const todoObject = {
         title : todoTitle,
@@ -223,7 +214,6 @@ function createTodoSubmission(e){
 
 function editTodo(todoCardClass){
 
-    console.log(`TODO CARD CLASS: ${todoCardClass}`)
 
     let titleInput = todoEditForm.querySelector("#editTodoTitle")
     let DescInput = todoEditForm.querySelector("#editTodoDesc")
@@ -233,9 +223,6 @@ function editTodo(todoCardClass){
     DescInput.value = todoList.get(todoCardClass).desc;
     priorityInput.value = todoList.get(todoCardClass).priority;
 
-    console.log(`titleInput: ${todoList.get(todoCardClass).title}`)
-    console.log(`DescInput: ${todoList.get(todoCardClass).desc}`)
-    console.log(`priorityInput: ${todoList.get(todoCardClass).priority}`)
 
 
     todoEditModal.show()
@@ -262,8 +249,6 @@ function editTodoSubmission(e, todoCardClass){
     const formData = new FormData(e.target);
     const formValues = new Map(formData.entries());
 
-    console.log(`Form VAlues:`)
-    console.log(formValues)
 
     // get the edited info
     const editedTodoTitle = formValues.get("editTodoTitle");
@@ -271,13 +256,8 @@ function editTodoSubmission(e, todoCardClass){
     const editedTodoPriority = formValues.get("editTodoPriority");
 
 
-    console.log(`editedTodoTitle: ${editedTodoTitle}`)
-    console.log(`editedTodoDesc: ${editedTodoDesc}`)
-    console.log(`editedTodoPriority: ${editedTodoPriority}`)
 
     let selectedTodo = todoList.get(todoCardClass)
-    console.log("%cselected todo", "color:orange")
-    console.log(selectedTodo)
 
     // update details
     selectedTodo.title =  editedTodoTitle;

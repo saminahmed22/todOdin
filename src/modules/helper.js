@@ -26,7 +26,6 @@ function setLocalStorage(key, value){
     localStorage.setItem(key, value)
 
     console.log(`${key} has been added to local storage as key`)
-    console.log(`${value} has been added to local storage as value`)    
 }
 
 function getLocalStorage(key){
