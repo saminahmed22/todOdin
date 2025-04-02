@@ -116,9 +116,22 @@ function sortTodos(){
         }
     })
 
+    // sort the todo maps to preserve the insertion order.
+    const sortedTop = new Map([...top.entries()].sort((a, b) =>{
+        return parseInt(a[0].split('_')[1]) - parseInt(b[0].split('_')[1])
+    }))
+
+    const sortedNormal = new Map([...normal.entries()].sort((a, b) =>{
+        return parseInt(a[0].split('_')[1]) - parseInt(b[0].split('_')[1])
+    }))
+
+    const sortedLow = new Map([...low.entries()].sort((a, b) =>{
+        return parseInt(a[0].split('_')[1]) - parseInt(b[0].split('_')[1])
+    }))
+
     todoList.clear()
 
-    top.forEach((value, key) => {
+    sortedTop.forEach((value, key) => {
         if(value.progress){
             progress.set(key, value)
         }
@@ -126,7 +139,7 @@ function sortTodos(){
             todoList.set(key, value)
         }
     })
-    normal.forEach((value, key) => {
+    sortedNormal.forEach((value, key) => {
         if(value.progress){
             progress.set(key, value)
         }
@@ -134,7 +147,7 @@ function sortTodos(){
             todoList.set(key, value)
         }
     })
-    low.forEach((value, key) => {
+    sortedLow.forEach((value, key) => {
         if(value.progress){
             progress.set(key, value)
         }
@@ -142,6 +155,7 @@ function sortTodos(){
             todoList.set(key, value)
         }
     })
+
     progress.forEach((value, key) => {
         todoList.set(key, value)
     })
