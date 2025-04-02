@@ -1,75 +1,76 @@
 import "./styles.css";
 import {createProject, editProject, deleteProject, postpone, loadProjectList, selectedProjectID} from "./modules/project"
-import {createTodo, editTodo, deleteTodo} from "./modules/todo"
+import {createTodo, editTodo, deleteTodo, loadTodos} from "./modules/todo"
+import {deSerialization, getLocalStorage, serialization, setLocalStorage} from "./modules/helper";
 
 
 // Drag Logic
 const container = document.querySelector(".todoList")
 
-document.addEventListener('mousedown', (event) => {
-    const dragIcon = event.target.closest(".dragIcon");
-    if (!dragIcon) return;
+// document.addEventListener('mousedown', (event) => {
+//     const dragIcon = event.target.closest(".dragIcon");
+//     if (!dragIcon) return;
     
-    const draggable = dragIcon.closest(".ToDo");
-    if (draggable) {
-        draggable.setAttribute("draggable", "true");
-    }
-});
+//     const draggable = dragIcon.closest(".ToDo");
+//     if (draggable) {
+//         draggable.setAttribute("draggable", "true");
+//     }
+// });
 
-document.addEventListener('mouseup', (event) => {
-    const dragIcon = event.target.closest(".dragIcon");
-    if (!dragIcon) return;
+// document.addEventListener('mouseup', (event) => {
+//     const dragIcon = event.target.closest(".dragIcon");
+//     if (!dragIcon) return;
 
-    const draggable = dragIcon.closest(".ToDo");
-    if (draggable) {
-        draggable.setAttribute("draggable", "false");
-    }
-});
+//     const draggable = dragIcon.closest(".ToDo");
+//     if (draggable) {
+//         draggable.setAttribute("draggable", "false");
+//     }
+// });
 
-document.addEventListener('dragstart', (event) => {
-    const draggable = event.target.closest(".ToDo");
-    if (draggable) {
-        draggable.classList.add('dragging');
-    }
-});
+// document.addEventListener('dragstart', (event) => {
+//     const draggable = event.target.closest(".ToDo");
+//     if (draggable) {
+//         draggable.classList.add('dragging');
+//     }
+// });
 
-document.addEventListener('dragend', (event) => {
-    const draggable = event.target.closest(".ToDo");
-    if (draggable) {
-        draggable.classList.remove('dragging');
-        draggable.setAttribute("draggable", "false");
-    }
-});
+// document.addEventListener('dragend', (event) => {
+//     const draggable = event.target.closest(".ToDo");
+//     if (draggable) {
+//         draggable.classList.remove('dragging');
+//         draggable.setAttribute("draggable", "false");
+//     }
+// });
 
-container.addEventListener('dragover', e =>{
-    e.preventDefault()
-    const afterelem = getDragAfterElement(e.clientY)
-    const draggable = document.querySelector(".dragging")
-    if (afterelem == null) {
-        container.appendChild(draggable)
-    }
-    else{
-        container.insertBefore(draggable, afterelem)
-    }
-})
-
-
+// container.addEventListener('dragover', e =>{
+//     e.preventDefault()
+//     const afterelem = getDragAfterElement(e.clientY)
+//     const draggable = document.querySelector(".dragging")
+//     if (afterelem == null) {
+//         container.appendChild(draggable)
+//     }
+//     else{
+//         container.insertBefore(draggable, afterelem)
+//     }
+// })
 
 
-function getDragAfterElement(y){
-    const draggableElem = [...container.querySelectorAll(".ToDo:not(.dragging)")]
 
-    return draggableElem.reduce((closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset){
-            return {offset: offset, element: child}
-        }
-        else{
-            return closest
-        }
-    }, { offset: Number.NEGATIVE_INFINITY }).element
-}
+
+// function getDragAfterElement(y){
+//     const draggableElem = [...container.querySelectorAll(".ToDo:not(.dragging)")]
+
+//     return draggableElem.reduce((closest, child) => {
+//         const box = child.getBoundingClientRect()
+//         const offset = y - box.top - box.height / 2;
+//         if (offset < 0 && offset > closest.offset){
+//             return {offset: offset, element: child}
+//         }
+//         else{
+//             return closest
+//         }
+//     }, { offset: Number.NEGATIVE_INFINITY }).element
+// }
 
 
 
@@ -161,23 +162,48 @@ toggleBtn.addEventListener("click", () => {
 
 
 
-// const defaultProject = {
-//     creationDate: new Date().toISOString(),
-//     deadlineDate: "2026-04-15T00:00:00.000Z",
-//     description: "Default project description",
-//     postponeDate: "2026-04-15T00:00:00.000Z",
-//     previousDeadline: "2025-03-29T00:00:00.000Z",
-//     projectPriority: "top",
-//     title: "Default Project",
-//     todos: {},
-//     uniqueID: "project_000001",
-// };
+const dummyProject = new Map([
+    ["title", "World Domination"],
+    ["description", "Gather cats do stuffs Idk"],
+    ["deadlineDate", "2026-04-01T00:00:00.000Z"],
+    ["projectPriority", "top"],
+    ["creationDate", "2025-04-02T21:51:01.385Z"],
+    ["uniqueID", "project_722400"],
+    ["todos", new Map([
+        ["Todo_1", {
+            title: "Gather cats",
+            desc: "those shits won't listen so force them ig",
+            priority: "top",
+            progress: false
+        }],
+        ["Todo_2", {
+            title: "PET THEM",
+            desc: "pet pet pet",
+            priority: "top",
+            progress: false
+        }],
+        ["Todo_4", {
+            title: "Get a life",
+            desc: "meh",
+            priority: "normal",
+            progress: false
+        }],
+        ["Todo_3", {
+            title: "oh yeah, world domination",
+            desc: "we'll see that later",
+            priority: "low",
+            progress: false
+        }]
+    ])],
+    ["postponeDate", null],
+    ["previousDeadline", "2026-04-01T00:00:00.000Z"]
+]);
 
-// // Check if the app has already been initialized
-// if (!localStorage.getItem("appInitialized")) {
-//     localStorage.setItem("project_000001", JSON.stringify(defaultProject));
-//     localStorage.setItem("appInitialized", "true");
-// }
+// Check if the app has already been initialized
+if (!localStorage.getItem("appInitialized")) {
+    setLocalStorage("project_000001", serialization(dummyProject))
+    localStorage.setItem("appInitialized", "true");
+}
 
 // Project section
 loadProjectList()
@@ -192,56 +218,58 @@ if(selectedProjectID == null){
     document.querySelector(".CTAText").style.display = "inline";
 }
 
-// Project event
-const createProjectBtn = document.querySelector(".addProjectBtn");
-const editProjectBtn = document.querySelector(".editProjectBtn");
-const deleteProjectBtn = document.querySelector(".deleteProjectBtn");
-const postponeBtn = document.querySelector(".postponeBtn");
 
-createProjectBtn.addEventListener("click", createProject);
-editProjectBtn.addEventListener("click", editProject);
-deleteProjectBtn.addEventListener("click", deleteProject);
-postponeBtn.addEventListener("click", postpone);
+document.addEventListener("click", (event) => {
+    // project event
+    if(event.target.matches(".addProjectBtn")){
+        createProject();
+        
+    }
+    else if(event.target.closest(".editProjectBtn")){
+        console.log("%cEdit project Event Triggered", "color:orange")
+        editProject();
+    }
+    else if(event.target.closest(".deleteProjectBtn")){
+        console.log("%cDelete project Event Triggered", "color:orange")
+        deleteProject();
+    }
+    else if(event.target.matches(".postponeBtn")){
+        console.log("%cPostpone project Event Triggered", "color:orange")
+        postpone();
+    }
 
-
-// todo Event
-const createTodoBtn = document.querySelector(".addTodoBtn")
-
-createTodoBtn.addEventListener("click", createTodo)
-
-document.addEventListener("click", (e) => {
-    if(e.target.closest(".editTodoBtn")){
-        const todoCardClass = e.target.closest(".ToDo").classList[1]
+    // todo event
+    else if (event.target.matches(".addTodoBtn")){
+        createTodo()
+    }
+    else if (event.target.closest(".editTodoBtn")){
+        const todoCardClass = event.target.closest(".ToDo").classList[1]
         editTodo(todoCardClass)
     }
-    if(e.target.closest(".deleteTodoBtn")){
-        const todoCardClass = e.target.closest(".ToDo").classList[1]
+    else if (event.target.closest(".deleteTodoBtn")){
+        const todoCardClass = event.target.closest(".ToDo").classList[1]
         deleteTodo(todoCardClass)
     }
-})
+});
 
 
 
-
+console.log("%cmight be issue at check box listener", "color:orange")
 document.addEventListener("change", (e) => {
     if(e.target.matches("input[type='checkbox']")){
 
         const todoDiv = e.target.closest(".ToDo");
         const todoClass = todoDiv.classList[1];
 
-        const projectObject = JSON.parse(localStorage.getItem(selectedProjectID));
-        const todoList = projectObject.todos;
-        const selecedTodo = todoList[todoClass];
+        const projectMap = deSerialization(getLocalStorage(selectedProjectID));
+        const todoList = projectMap.get("todos");
+        const selecedTodoObject = todoList.get(todoClass);
 
-        selecedTodo["progress"] = e.target.checked ? "true" : "false";
+        selecedTodoObject["progress"] = e.target.checked;
 
-        projectObject["todos"] = todoList;
+        projectMap.set("todos", todoList)
 
-        localStorage.setItem(selectedProjectID, JSON.stringify(projectObject))
+        setLocalStorage(selectedProjectID, serialization(projectMap))
+        loadTodos()
     }
 })
-
-
-
-
-

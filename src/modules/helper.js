@@ -1,8 +1,10 @@
-function serialization(arr){
+function serialization(map){
 
-    console.log(`Array sent in serialization = ${arr} `)
+    if (map === null) { 
+        throw new Error(`Arr null: ${map}`);
+    }
 
-    return JSON.stringify(Array.from(arr, ([key, value]) => 
+    return JSON.stringify(Array.from(map, ([key, value]) => 
         [key, value instanceof Map ? Array.from(value) : value]
     ))
 }
@@ -10,7 +12,9 @@ function serialization(arr){
 
 function deSerialization(arr){
 
-    console.log(`Array sent in deSerialization = ${arr} `)
+    if (arr === null) { 
+        throw new Error(`Arr null: ${arr}`);
+    }
 
     const parsedArr = JSON.parse(arr)
     return new Map(parsedArr.map(([key, value]) => 
@@ -37,15 +41,9 @@ function getLocalStorage(key){
 
 function deleteLocalStorage(key){
     localStorage.removeItem(key)
-    
+
     console.log(`${key} has been removed from the local storage`)  
 }
 
-function overlay(){
-    const overlayDiv = document.querySelector(".overlay")
-    const currentDisplay = overlayDiv.style.display;
-    overlayDiv.style.display = currentDisplay == "none" ? "inline" : "none";
-}
 
-
-export {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage, overlay}
+export {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage}

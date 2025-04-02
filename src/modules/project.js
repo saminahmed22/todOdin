@@ -1,7 +1,8 @@
 import {format, differenceInDays, differenceInHours, addDays} from 'date-fns'
 import {loadTodos} from "./todo";
-import {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage, overlay} from "./helper"
+import {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage} from "./helper"
 
+let overlayDiv = document.querySelector(".overlay")
 
 const projectCreateModal = document.querySelector(".createProjectModal");
 const projectCreateForm = document.querySelector("#createProjectForm");
@@ -20,8 +21,9 @@ let selectedProjectID = null;
 
 
 function createProject(){
+    console.log("triggered in frist click")
     projectCreateModal.show();
-    overlay()
+    overlayDiv.style.display = "inline"
     
     projectCreateForm.removeEventListener("submit", createProjectSubmit)
     projectCreateForm.addEventListener("submit", createProjectSubmit)
@@ -29,7 +31,7 @@ function createProject(){
     projectCreateModal.querySelector(".cancelBtn").addEventListener("click", () => {
         projectCreateModal.close();
         projectCreateForm.reset()
-        overlay()
+        overlayDiv.style.display = "none"
         projectCreateForm.removeEventListener("submit", createProjectSubmit)
     })
 }
@@ -62,7 +64,7 @@ function createProjectSubmit(e){
     loadProjectList();
 
     projectCreateModal.close();
-    overlay()
+    overlayDiv.style.display = "none"
     projectCreateForm.reset();
 }
 
@@ -72,7 +74,7 @@ function createProjectSubmit(e){
 
 function editProject(){
     projectEditModal.show();
-    overlay()
+    overlayDiv.style.display = "inline"
 
     projectInfoLoad(selectedProjectID)
 
@@ -84,7 +86,7 @@ function editProject(){
     projectEditModal.querySelector(".cancelBtn").addEventListener("click", () => {
         projectEditModal.close();
         projectEditForm.reset();
-        overlay()
+        overlayDiv.style.display = "none"
         projectEditForm.removeEventListener("submit", editProjectSubmit)
     })
 }
@@ -128,7 +130,7 @@ function editProjectSubmit(e){
 
     projectEditModal.close();
     projectEditForm.reset()
-    overlay()
+    overlayDiv.style.display = "none"
 }
 
 
@@ -138,7 +140,7 @@ function editProjectSubmit(e){
 function deleteProject(){
 
     projectDeleteModal.show();
-    overlay()
+    overlayDiv.style.display = "inline"
 
 
     const projectMap = deSerialization(getLocalStorage(selectedProjectID))
@@ -154,7 +156,7 @@ function deleteProject(){
 
     projectDeleteModal.querySelector(".cancelBtn").addEventListener("click", () => {
         projectDeleteModal.close();
-        overlay()
+        overlayDiv.style.display = ""
         projectDeleteForm.removeEventListener("submit", deleteProjectSubmit)
     })
 }
@@ -166,12 +168,18 @@ function deleteProjectSubmit(e){
 
     selectedProjectID = null;
     loadProjectList()
-    document.querySelector("main").style.display = "none";
+
+    const main = document.querySelector("main")
+    const childs = Array.from(main.children)
+    childs.forEach(child => {
+        child.style.display = "none";
+    })
+    main.style.display = "flex";
     document.querySelector(".CTAText").style.display = "inline";
     
 
     projectDeleteModal.close();
-    overlay()
+    overlayDiv.style.display = "none"
 }
 
 
@@ -181,12 +189,9 @@ function deleteProjectSubmit(e){
 function postpone(){
 
     postponeModal.show();
-    console.log(`selectedProjectID in postpone ${selectedProjectID}`)
-    overlay()
+    overlayDiv.style.display = "inline"
 
     const projectMap =  deSerialization(getLocalStorage(selectedProjectID))
-    console.clear()
-    console.log(`projectMap in postpone = ${projectMap}`)
 
     const currentDeadline = projectMap.get("deadlineDate") ? projectMap.get("deadlineDate") : new Date();
     projectMap.set("previousDeadline", currentDeadline);
@@ -206,7 +211,7 @@ function postpone(){
     postponeModal.querySelector(".cancelBtn").addEventListener("click", () => {
         postponeModal.close();
         postponeForm.reset()
-        overlay()
+        overlayDiv.style.display = "none"
         postponeForm.removeEventListener("submit", postponeSubmission)
     })
 }
@@ -239,7 +244,7 @@ function postponeSubmission(e, currentDeadline){
 
     postponeModal.close();
     postponeForm.reset();
-    overlay()
+    overlayDiv.style.display = "none"
 }
 
 
@@ -263,11 +268,11 @@ function loadProjectList(){
             projectIDs.push(ID)
         }
     }
-
+    console.log("%cmight be a issue here at project sort sidebar", "color:orange")
     // sort projectIDs array into reverse chronological order
     projectIDs.sort((a, b) => {
-        const projectA = new Map(JSON.parse(localStorage.getItem(a)));
-        const projectB = new Map(JSON.parse(localStorage.getItem(b)));
+        const projectA = deSerialization(getLocalStorage(a));
+        const projectB = deSerialization(getLocalStorage(b));
         
         const d1 = new Date(projectA.get("creationDate"))
         const d2 = new Date(projectB.get("creationDate"))

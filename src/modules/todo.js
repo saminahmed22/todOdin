@@ -1,6 +1,7 @@
 import {selectedProjectID} from "./project"
 import {serialization, deSerialization, setLocalStorage, getLocalStorage, overlay} from "./helper"
 
+let overlayDiv = document.querySelector(".overlay")
 
 const todoCreateModal = document.querySelector(".createTodoModal");
 const todoCreateForm = document.querySelector("#createTodoForm");
@@ -17,13 +18,11 @@ let todoList = null;
 
 function loadTodos(){
 
-    // sortTodos()
-
     projectMap = deSerialization(getLocalStorage(selectedProjectID))
+    sortTodos()
 
     console.log(projectMap)
 
-    // this list contains multiple todo objects
     todoList = projectMap.get("todos");
     console.log(todoList)
 
@@ -32,18 +31,40 @@ function loadTodos(){
 
     const todoListDiv = document.querySelector(".todoList");
     
+    // check for expanded.
+    // let exandedDivs = []
+    // const childs = document.querySelectorAll(".ToDo")
+    // childs.forEach(child => {
+    //     if(child.classList.contains("expanded")){
+    //         exandedDivs.push(child.id)
+    //     }
+    // })
+
+    // exandedDivs.forEach(div => {
+    //     console.log(`Extended div id: ${div}`)
+    // })
+
 
     while (todoListDiv.children.length > 1) {
         todoListDiv.lastElementChild.remove();
     }
 
+    // MIGHT BE MIXING IDS EVERYTIME IT REFRESHES. Like todo 3 becomes todo 1;
+
     todoIDs.forEach(todoID => {
 
         const todoDiv = document.querySelector(".ToDo").cloneNode(true)
         todoDiv.classList.add(todoID)
+        todoDiv.id = todoID
+        // console.log(`TODO DIV ID ${todoDiv.id}`)
+
+        // if(exandedDivs.includes(todoID)){
+        //     todoDiv.classList.add("expanded")
+        // }
+
 
         const todoObject = todoList.get(todoID)
-        console.log(todoObject)
+        console.log(`TODO OBJECT: ${JSON.stringify(todoObject)}`)
 
         const todoTitle = todoObject.title
         const todoDesc = todoObject.desc
@@ -53,7 +74,18 @@ function loadTodos(){
 
         todoDiv.querySelector(".todoTitle").textContent = todoTitle
         todoDiv.querySelector(".todoDesc").textContent = todoDesc
-        todoDiv.querySelector("#todoCheck").checked = (todoProgress == "true");
+
+        todoDiv.querySelector("#todoCheck").checked = todoProgress;
+
+        if(todoProgress){
+            todoDiv.style.opacity = ".5";
+            todoDiv.querySelector("h6").style.textDecoration = "line-through";
+
+        }
+        else{
+            todoDiv.style.opacity = "1";
+            todoDiv.querySelector("h6").style.textDecoration = "none";
+        }
 
         let borderColor = todoPriority == "top" ? "red" : (todoPriority == "low" ? "green" : "yellow");
         todoDiv.style.borderLeft = `3px solid ${borderColor}`
@@ -64,40 +96,75 @@ function loadTodos(){
 }
 
 
-// function sortTodos(){
-    
-//     console.log("%cSupposed to sort todos", "color: orange");
+function sortTodos(){
+    todoList = projectMap.get("todos");
 
-//     projectMap = JSON.parse(localStorage.getItem(selectedProjectID));
+    let top = new Map()
+    let normal = new Map()
+    let low = new Map()
+    let progress = new Map()
 
-//     // this list contains multiple todo objects
-//     todoList = projectMap.todos;
+    todoList.forEach((value, key) => {
+        if(value.priority == "top"){
+            top.set(key, value)
+        }
+        else if(value.priority == "normal"){
+            normal.set(key, value)
+        }
+        else if(value.priority == "low"){
+            low.set(key, value)
+        }
+    })
 
-//     console.clear();
-//     console.log(todoList)
+    todoList.clear()
 
-//     // initially sort based on priority
-    
+    top.forEach((value, key) => {
+        if(value.progress){
+            progress.set(key, value)
+        }
+        else{
+            todoList.set(key, value)
+        }
+    })
+    normal.forEach((value, key) => {
+        if(value.progress){
+            progress.set(key, value)
+        }
+        else{
+            todoList.set(key, value)
+        }
+    })
+    low.forEach((value, key) => {
+        if(value.progress){
+            progress.set(key, value)
+        }
+        else{
+            todoList.set(key, value)
+        }
+    })
+    progress.forEach((value, key) => {
+        todoList.set(key, value)
+    })
 
+    setLocalStorage(selectedProjectID, serialization(projectMap))
+}
 
-//     // the checked ones should go at the bottom of the list
-//     // but also check for user sortings
-// }
 
 
 
 function createTodo(){
+    console.log("%cTodo Event Triggered", "color:orange")
     todoCreateModal.show()
-    overlay()
+    overlayDiv.style.display = "inline"
 
     todoCreateForm.removeEventListener("submit", createTodoSubmission)
     todoCreateForm.addEventListener("submit", createTodoSubmission)
 
 
     todoCreateForm.querySelector(".cancelBtn").addEventListener("click", () => {
-        todoEditModal.close();
+        todoCreateModal.close();
         todoCreateForm.reset()
-        overlay()
+        overlayDiv.style.display = "none"
         todoCreateForm.removeEventListener("submit", createTodoSubmission)
     })
 }
@@ -116,7 +183,7 @@ function createTodoSubmission(e){
     const todoPriority = formValues.get("todoPriority");
 
     const TodoListMap = projectMap.get("todos")
-
+    console.log(`TodoListMap size ${TodoListMap.size}`)
 
     const createTodoID = `Todo_${TodoListMap.size + 1}`;
     console.log(`Todo ID  = ${createTodoID}`)
@@ -135,13 +202,14 @@ function createTodoSubmission(e){
 
     loadTodos()
     todoCreateModal.close();
-    overlay()
+    overlayDiv.style.display = "none"
     todoCreateForm.reset();
 }
 
 
 function editTodo(todoCardClass){
 
+    console.log(`TODO CARD CLASS: ${todoCardClass}`)
 
     let titleInput = todoEditForm.querySelector("#editTodoTitle")
     let DescInput = todoEditForm.querySelector("#editTodoDesc")
@@ -151,19 +219,26 @@ function editTodo(todoCardClass){
     DescInput.value = todoList.get(todoCardClass).desc;
     priorityInput.value = todoList.get(todoCardClass).priority;
 
+    console.log(`titleInput: ${todoList.get(todoCardClass).title}`)
+    console.log(`DescInput: ${todoList.get(todoCardClass).desc}`)
+    console.log(`priorityInput: ${todoList.get(todoCardClass).priority}`)
+
 
     todoEditModal.show()
-    overlay()
+    overlayDiv.style.display = "inline"
 
-    todoEditForm.removeEventListener("submit", editTodoSubmission)
-    todoEditForm.addEventListener("submit", (e) => editTodoSubmission(e, todoCardClass))
+    todoEditForm.removeEventListener("submit", editTodoSubmission);
+    todoEditForm.addEventListener("submit", function handler(e){
+        editTodoSubmission(e, todoCardClass)
+        todoEditForm.removeEventListener("submit", handler)
+    })
 
 
     todoEditModal.querySelector(".cancelBtn").addEventListener("click", () => {
         todoEditModal.close();
         todoEditForm.reset()
-        overlay()
-        todoEditForm.removeEventListener("submit", editTodoSubmission)
+        overlayDiv.style.display = "none"
+        todoEditForm.removeEventListener("submit", editTodoSubmission);
     })
 }
 
@@ -173,12 +248,22 @@ function editTodoSubmission(e, todoCardClass){
     const formData = new FormData(e.target);
     const formValues = new Map(formData.entries());
 
+    console.log(`Form VAlues:`)
+    console.log(formValues)
+
     // get the edited info
     const editedTodoTitle = formValues.get("editTodoTitle");
     const editedTodoDesc = formValues.get("editTodoDesc");
     const editedTodoPriority = formValues.get("editTodoPriority");
 
+
+    console.log(`editedTodoTitle: ${editedTodoTitle}`)
+    console.log(`editedTodoDesc: ${editedTodoDesc}`)
+    console.log(`editedTodoPriority: ${editedTodoPriority}`)
+
     let selectedTodo = todoList.get(todoCardClass)
+    console.log("%cselected todo", "color:orange")
+    console.log(selectedTodo)
 
     // update details
     selectedTodo.title =  editedTodoTitle;
@@ -192,7 +277,7 @@ function editTodoSubmission(e, todoCardClass){
     loadTodos()
 
     todoEditModal.close();
-    overlay()
+    overlayDiv.style.display = "none"
     todoEditForm.reset();
 }
 
@@ -209,7 +294,7 @@ function deleteTodo(todoCardClass){
 
 
     todoDeleteModal.show()
-    overlay()
+    overlayDiv.style.display = "inline"
 
     todoDeleteForm.removeEventListener("submit", deleteTodoSubmission)
     todoDeleteForm.addEventListener("submit", (e) => deleteTodoSubmission(e, todoCardClass))
@@ -217,7 +302,7 @@ function deleteTodo(todoCardClass){
     todoDeleteModal.querySelector(".cancelBtn").addEventListener("click", () => {
         todoDeleteModal.close();
         todoDeleteForm.reset()
-        overlay()
+        overlayDiv.style.display = "none"
         todoDeleteForm.removeEventListener("submit", deleteTodoSubmission)
     })
 }
@@ -235,7 +320,7 @@ function deleteTodoSubmission(e, todoCardClass){
     loadTodos()
 
     todoDeleteModal.close();
-    overlay()
+    overlayDiv.style.display = "none"
     todoDeleteForm.reset();
 }
 
