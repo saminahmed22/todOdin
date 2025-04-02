@@ -9,6 +9,7 @@
     --primaryTextColor: white;
     --background: rgba(13, 16, 23, 255);
     --backgroundColorLight: rgba(18, 21, 28, 255);
+    --calenderPicker: invert(1);
 }
 
 .lightMode {
@@ -17,6 +18,7 @@
     --primaryTextColor: black;
     --background: rgb(255, 236, 199);
     --backgroundColorLight: white;
+    --calenderPicker: invert(0);
 }
 
 .themeBtn {
@@ -28,8 +30,6 @@
 .themeBtnIcon {
     scale: 1.4;
 }
-
-
 
 * {
     padding: 0;
@@ -66,9 +66,9 @@
     border: 2px solid var(--backgroundColorLight);
 }
 
-/* ::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-} */
+::-webkit-calendar-picker-indicator {
+    filter: var(--calenderPicker);
+}
 
 input[type="checkbox"] {
     accent-color: green;
@@ -105,7 +105,7 @@ body {
 
     background-color: var(--background);
     display: grid;
-    grid-template-columns: minmax(250px, 2.5fr) minmax(300px, 7.5fr);
+    grid-template-columns: minmax(340px, 2.5fr) minmax(300px, 7.5fr);
 
     transition: background-color .5s ease;
 }
@@ -219,6 +219,9 @@ li {
 .projectSidebar h5 {
     font-size: 1.2rem;
     font-weight: 500;
+    word-wrap: break-word;
+    max-width: 300px;
+    min-width: 150px;
 }
 
 .pirorityMark {
@@ -322,8 +325,8 @@ main {
 
 .todoList {
     height: 400px;
-    width: 1000px;
-    margin: 100px 200px;
+    width: fit-content;
+    margin: 100px 250px;
     overflow: auto;
     overflow-x: hidden;
 }
@@ -335,12 +338,12 @@ main {
     min-height: 50px;
     min-width: 440px;
 
-    border: 1px solid white;
+    border: 1px solid var(--primaryTextColor);
     border-radius: 5px;
 
     margin: 20px 20px 0 20px;
 
-    color: white;
+    color: var(--primaryTextColor);
 
     overflow: hidden;
     transition: height 0.4s ease-out, width 0.3s ease-out;
@@ -395,7 +398,7 @@ main {
 .todoTitle {
     font-size: 1rem;
     font-weight: 400;
-    margin: 10px 40px 10px 0;
+    margin: 10px 0px 10px 0;
 }
 
 #todoCheck {
@@ -415,6 +418,8 @@ main {
 
 .todoDesc {
     padding: 5px 80px;
+    word-wrap: break-word;
+    max-width: 800px;
 }
 
 .todoActBtns {
