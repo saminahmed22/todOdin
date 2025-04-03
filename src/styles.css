@@ -327,7 +327,7 @@ main {
     height: 400px;
     width: fit-content;
     margin: 100px 250px;
-    overflow: auto;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
