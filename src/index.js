@@ -218,7 +218,7 @@ if(selectedProjectID == null){
     document.querySelector(".CTAText").style.display = "inline";
 }
 
-
+let todoCardClass;
 document.addEventListener("click", (event) => {
     // project event
     if(event.target.matches(".addProjectBtn")){
@@ -240,11 +240,11 @@ document.addEventListener("click", (event) => {
         createTodo()
     }
     else if (event.target.closest(".editTodoBtn")){
-        const todoCardClass = event.target.closest(".ToDo").classList[1]
-        editTodo(todoCardClass)
+        todoCardClass = event.target.closest(".ToDo").classList[1]
+        editTodo()
     }
     else if (event.target.closest(".deleteTodoBtn")){
-        const todoCardClass = event.target.closest(".ToDo").classList[1]
+        todoCardClass = event.target.closest(".ToDo").classList[1]
         deleteTodo(todoCardClass)
     }
 });
@@ -269,3 +269,5 @@ document.addEventListener("change", (e) => {
         loadTodos()
     }
 })
+
+export{todoCardClass}

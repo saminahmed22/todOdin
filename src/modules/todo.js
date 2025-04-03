@@ -1,5 +1,6 @@
 import {selectedProjectID} from "./project"
 import {serialization, deSerialization, setLocalStorage, getLocalStorage, overlay} from "./helper"
+import {todoCardClass} from '../index';
 
 let overlayDiv = document.querySelector(".overlay")
 
@@ -248,7 +249,7 @@ function createTodoSubmission(e){
 }
 
 
-function editTodo(todoCardClass){
+function editTodo(){
 
 
     let titleInput = todoEditForm.querySelector("#editTodoTitle")
@@ -265,10 +266,7 @@ function editTodo(todoCardClass){
     overlayDiv.style.display = "inline"
 
     todoEditForm.removeEventListener("submit", editTodoSubmission);
-    todoEditForm.addEventListener("submit", function handler(e){
-        editTodoSubmission(e, todoCardClass)
-        todoEditForm.removeEventListener("submit", handler)
-    })
+    todoEditForm.addEventListener("submit", editTodoSubmission)
 
 
     todoEditModal.querySelector(".cancelBtn").addEventListener("click", () => {
@@ -279,7 +277,7 @@ function editTodo(todoCardClass){
     })
 }
 
-function editTodoSubmission(e, todoCardClass){
+function editTodoSubmission(e){
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -316,7 +314,7 @@ function editTodoSubmission(e, todoCardClass){
 
 
 
-function deleteTodo(todoCardClass){
+function deleteTodo(){
 
     // load todo title
     let titleInput = todoDeleteForm.querySelector("#deleteTodoTitle")
@@ -327,7 +325,7 @@ function deleteTodo(todoCardClass){
     overlayDiv.style.display = "inline"
 
     todoDeleteForm.removeEventListener("submit", deleteTodoSubmission)
-    todoDeleteForm.addEventListener("submit", (e) => deleteTodoSubmission(e, todoCardClass))
+    todoDeleteForm.addEventListener("submit", deleteTodoSubmission)
 
     todoDeleteModal.querySelector(".cancelBtn").addEventListener("click", () => {
         todoDeleteModal.close();
@@ -337,7 +335,7 @@ function deleteTodo(todoCardClass){
     })
 }
 
-function deleteTodoSubmission(e, todoCardClass){
+function deleteTodoSubmission(e){
     e.preventDefault();
 
     // remove from the object
