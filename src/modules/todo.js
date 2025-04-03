@@ -98,11 +98,8 @@ function loadTodos(newTodoID=false){
 
         const dropIcon = newTodoDiv.querySelector(".dropIcon")
         dropIcon.classList.add("rotated")
-        
-        const isOverflowed = todoListDiv.scrollHeight > todoListDiv.clientHeight
-        if(isOverflowed){
-            newTodoDiv.scrollIntoView({ behavior: 'smooth' , block: 'end'})
-        }
+
+        newTodoDiv.scrollIntoView({ behavior: 'smooth' , block: 'end'})
     }
 }
 
@@ -198,22 +195,14 @@ function createTodo(){
 function createTodoSubmission(e){
     e.preventDefault();
 
-    console.log('%cCurrent Project Map:', "color:red")
-    console.table(Object.fromEntries(projectMap))
-
     const formData = new FormData(e.target);
     const formValues = new Map(formData.entries());
-
-    console.log('Information received from the createTodo form:')
-    console.table(Object.fromEntries(formValues))
 
     const todoTitle = formValues.get("todoTitle");
     const todoDesc = formValues.get("todoDesc");
     const todoPriority = formValues.get("todoPriority");
 
     const TodoListMap = projectMap.get("todos")
-    console.log('%cTodoList Map before adding the new todo:', "color:red")
-    console.table(Object.fromEntries(TodoListMap))
     
     // Gets the IDs of currently existing todos
     const keys = Array.from(TodoListMap.keys());
@@ -241,26 +230,14 @@ function createTodoSubmission(e){
     // creates an unique id besed on previous ID
     const createTodoID = `Todo_${largestNum + 1}`
 
-    console.log('%cCurrent size of TodoListMap' + ': ' + TodoListMap.size, "color: green")
-    console.log('%cGenerated todo ID for '+ todoTitle + ':' + createTodoID, "color: orange")
-
     const todoObject = {
         title : todoTitle,
         desc : todoDesc,
         priority : todoPriority,
         progress : false
     }
-    console.log('%cObject created with the infromation received:')
-    console.table(todoObject)
 
     TodoListMap.set(createTodoID, todoObject)
-
-    console.log('%cTodoList Map after adding the new todo:', "color:red")
-    console.table(Object.fromEntries(TodoListMap))
-
-
-    console.log("%cSerialized todoObject:")
-    console.table(JSON.parse(serialization(projectMap)));
 
     setLocalStorage(selectedProjectID, serialization(projectMap))
 
