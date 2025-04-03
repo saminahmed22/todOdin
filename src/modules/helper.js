@@ -23,18 +23,20 @@ function deSerialization(arr){
 }
 
 function setLocalStorage(key, value){
-    localStorage.setItem(key, value)
 
-    console.log(`${key} has been added to local storage as key`)
+    if (key === null) { 
+        throw new Error(`key null`);
+    }
+    else if (value === null) { 
+        throw new Error(`value null`);
+    }
+
+    localStorage.setItem(key, value)
 }
 
 function getLocalStorage(key){
-    const item = localStorage.getItem(key);
-    
-    if (item === null) { 
-        throw new Error(`No value found for key: ${key}`);
-    }
 
+    const item = localStorage.getItem(key);
     return item;
 }
 

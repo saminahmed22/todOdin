@@ -168,7 +168,7 @@ const dummyProject = new Map([
     ["deadlineDate", "2026-04-01T00:00:00.000Z"],
     ["projectPriority", "top"],
     ["creationDate", "2025-04-02T21:51:01.385Z"],
-    ["uniqueID", "project_722400"],
+    ["uniqueID", "project_000001"],
     ["todos", new Map([
         ["Todo_1", {
             title: "Gather cats",

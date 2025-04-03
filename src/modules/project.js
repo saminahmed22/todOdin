@@ -61,7 +61,7 @@ function createProjectSubmit(e){
 
 
     loadProjectList();
-
+    loadNewProject(uniqueID);
     projectCreateModal.close();
     overlayDiv.style.display = "none"
     projectCreateForm.reset();
@@ -319,6 +319,7 @@ function loadProjectList(){
 }
 
 function projectListListener(){
+
     const projectListDivs = document.querySelectorAll(".projectSidebar")
 
     projectListDivs.forEach(div => {
@@ -333,26 +334,49 @@ function projectListListener(){
                 div.classList.add("selectedProject")
             }
             selectedProjectID = div.id.slice(0, -4);
-            document.querySelector("main").style.display = "block";
 
-            // enable childrens in main and disable cta text
-            const main = document.querySelector("main")
-            const childs = Array.from(main.children)
-            childs.forEach(child => {
-                child.style.display = "block";
-            })
-            document.querySelector(".CTAText").style.display = "none";
             loadTodos()
-            loadProjectMain(selectedProjectID);
+            loadProjectMain();
             return selectedProjectID;
         })
     })
 }
 
+function loadNewProject(newProjectID){
+    // change selected project ID to new project ID,
+    selectedProjectID = newProjectID
+    const newDiv = document.getElementById(`${newProjectID}_Div`)
+    newDiv.classList.add("projectSidebar")
 
+    const previousProject = document.querySelector(".selectedProject")
+
+    if(previousProject === null){
+        newDiv.classList.add("selectedProject")
+    }
+    else{
+        previousProject.classList.remove("selectedProject")
+        newDiv.classList.add("selectedProject")
+    }
+    loadTodos()
+    loadProjectMain()
+    return selectedProjectID;
+}
 
 // load project into the main section
 function loadProjectMain(){
+
+    // enable childrens in main and disable cta text
+    const main = document.querySelector("main")
+    main.style.display = "block";
+
+    const childs = Array.from(main.children)
+    childs.forEach(child => {
+        child.style.display = "block";
+    })
+
+    document.querySelector(".CTAText").style.display = "none";
+
+
 
     const projectMap = deSerialization(getLocalStorage(selectedProjectID))
 

@@ -98,8 +98,14 @@ function loadTodos(newTodoID=false){
 
         const dropIcon = newTodoDiv.querySelector(".dropIcon")
         dropIcon.classList.add("rotated")
-
-        newTodoDiv.scrollIntoView({ behavior: 'smooth' })
+        
+        const isOverflowed = todoListDiv.scrollHeight > todoListDiv.clientHeight
+        if(isOverflowed){
+            todoListDiv.scrollTo({
+                top: todoListDiv.clientHeight,
+                behavior: 'smooth'
+            })
+        }
     }
 }
 
