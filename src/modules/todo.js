@@ -101,10 +101,7 @@ function loadTodos(newTodoID=false){
         
         const isOverflowed = todoListDiv.scrollHeight > todoListDiv.clientHeight
         if(isOverflowed){
-            todoListDiv.scrollTo({
-                top: todoListDiv.clientHeight,
-                behavior: 'smooth'
-            })
+            newTodoDiv.scrollIntoView({ behavior: 'smooth' , block: 'end'})
         }
     }
 }
