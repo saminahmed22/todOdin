@@ -16,7 +16,7 @@ const todoDeleteForm = document.querySelector("#deleteTodoForm");
 let projectMap = null;
 let todoList = null;
 
-function loadTodos(){
+function loadTodos(newTodoID=false){
 
     projectMap = deSerialization(getLocalStorage(selectedProjectID))
     sortTodos()
@@ -30,16 +30,13 @@ function loadTodos(){
     const todoListDiv = document.querySelector(".todoList");
     
     // check for expanded.
-    // let exandedDivs = []
-    // const childs = document.querySelectorAll(".ToDo")
-    // childs.forEach(child => {
-    //     if(child.classList.contains("expanded")){
-    //         exandedDivs.push(child.id)
-    //     }
-    // })
-
-    // exandedDivs.forEach(div => {
-    // })
+    let exandedDivs = []
+    const childs = document.querySelectorAll(".ToDo")
+    childs.forEach(child => {
+        if(child.classList.contains("expanded")){
+            exandedDivs.push(child.id)
+        }
+    })
 
 
     while (todoListDiv.children.length > 1) {
@@ -52,12 +49,14 @@ function loadTodos(){
 
         const todoDiv = document.querySelector(".ToDo").cloneNode(true)
         todoDiv.classList.add(todoID)
+
         todoDiv.id = todoID
-
-        // if(exandedDivs.includes(todoID)){
-        //     todoDiv.classList.add("expanded")
-        // }
-
+        // expand if it was expanded before refreshing
+        if(exandedDivs.includes(todoID)){
+            todoDiv.classList.add("expanded")
+            const dropIcon = todoDiv.querySelector(".dropIcon")
+            dropIcon.classList.add("rotated")
+        }
 
         const todoObject = todoList.get(todoID)
 
@@ -85,9 +84,23 @@ function loadTodos(){
         let borderColor = todoPriority == "top" ? "red" : (todoPriority == "low" ? "green" : "yellow");
         todoDiv.style.borderLeft = `3px solid ${borderColor}`
 
+
+
+
         todoDiv.removeAttribute("hidden");
         todoListDiv.appendChild(todoDiv)
     })
+    
+
+    if(newTodoID){
+        const newTodoDiv = document.getElementById(newTodoID)
+        newTodoDiv.classList.add("expanded")
+
+        const dropIcon = newTodoDiv.querySelector(".dropIcon")
+        dropIcon.classList.add("rotated")
+
+        newTodoDiv.scrollIntoView({ behavior: 'smooth' })
+    }
 }
 
 
@@ -182,17 +195,51 @@ function createTodo(){
 function createTodoSubmission(e){
     e.preventDefault();
 
+    console.log('%cCurrent Project Map:', "color:red")
+    console.table(Object.fromEntries(projectMap))
+
     const formData = new FormData(e.target);
     const formValues = new Map(formData.entries());
 
+    console.log('Information received from the createTodo form:')
+    console.table(Object.fromEntries(formValues))
 
     const todoTitle = formValues.get("todoTitle");
     const todoDesc = formValues.get("todoDesc");
     const todoPriority = formValues.get("todoPriority");
 
     const TodoListMap = projectMap.get("todos")
+    console.log('%cTodoList Map before adding the new todo:', "color:red")
+    console.table(Object.fromEntries(TodoListMap))
+    
+    // Gets the IDs of currently existing todos
+    const keys = Array.from(TodoListMap.keys());
 
-    const createTodoID = `Todo_${TodoListMap.size + 1}`;
+    // extracts the highest serial number from current todos
+    function extractLargestNum(keys){
+
+        let highest = 0;
+
+        // if there's no todo, retuns 0 as highest
+        if(!keys){
+            return highest;
+        }
+        else{
+            keys.forEach(key => {
+                const current = parseInt(key.split('_')[1]);
+                highest = current > highest ? current : highest;
+            })
+            return highest;
+        }
+
+    }
+    const largestNum = extractLargestNum(keys)
+
+    // creates an unique id besed on previous ID
+    const createTodoID = `Todo_${largestNum + 1}`
+
+    console.log('%cCurrent size of TodoListMap' + ': ' + TodoListMap.size, "color: green")
+    console.log('%cGenerated todo ID for '+ todoTitle + ':' + createTodoID, "color: orange")
 
     const todoObject = {
         title : todoTitle,
@@ -200,12 +247,21 @@ function createTodoSubmission(e){
         priority : todoPriority,
         progress : false
     }
+    console.log('%cObject created with the infromation received:')
+    console.table(todoObject)
 
     TodoListMap.set(createTodoID, todoObject)
 
+    console.log('%cTodoList Map after adding the new todo:', "color:red")
+    console.table(Object.fromEntries(TodoListMap))
+
+
+    console.log("%cSerialized todoObject:")
+    console.table(JSON.parse(serialization(projectMap)));
+
     setLocalStorage(selectedProjectID, serialization(projectMap))
 
-    loadTodos()
+    loadTodos(createTodoID)
     todoCreateModal.close();
     overlayDiv.style.display = "none"
     todoCreateForm.reset();
