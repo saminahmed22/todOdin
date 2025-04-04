@@ -5,7 +5,7 @@ import {deSerialization, getLocalStorage, serialization, setLocalStorage} from "
 
 
 // Drag Logic
-const container = document.querySelector(".todoList")
+// const container = document.querySelector(".todoList")
 
 // document.addEventListener('mousedown', (event) => {
 //     const dragIcon = event.target.closest(".dragIcon");
@@ -53,9 +53,6 @@ const container = document.querySelector(".todoList")
 //         container.insertBefore(draggable, afterelem)
 //     }
 // })
-
-
-
 
 // function getDragAfterElement(y){
 //     const draggableElem = [...container.querySelectorAll(".ToDo:not(.dragging)")]
