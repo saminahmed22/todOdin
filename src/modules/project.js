@@ -18,7 +18,7 @@ const postponeForm = document.querySelector("#postponeForm");
 
 
 const repeatCount = document.getElementById("repeatCount");
-const repeatMesure = document.getElementById("repeatMesure");
+const repeatMeasure = document.getElementById("repeatMeasure");
 
 const projectDeadline = document.getElementById("projectDeadline");
 
@@ -40,7 +40,7 @@ function createProject(){
         overlayDiv.style.display = "none"
 
         repeatCount.style.display = "none";
-        repeatMesure.style.display = "none";
+        repeatMeasure.style.display = "none";
         projectDeadline.style.display = "inline"
 
         projectCreateForm.removeEventListener("submit", createProjectSubmit)
@@ -67,7 +67,7 @@ function createProjectSubmit(e){
     let deadline;
     if(formValues.get("projectType") == "repeating"){
         
-        const mesure = formValues.get("repeatMesure")
+        const mesure = formValues.get("repeatMeasure")
         const createDate = new Date().toISOString()
         const repeatCount = parseInt(formValues.get("repeatCount"))
         
@@ -100,7 +100,7 @@ function createProjectSubmit(e){
 
 
     repeatCount.style.display = "none";
-    repeatMesure.style.display = "none";
+    repeatMeasure.style.display = "none";
     projectDeadline.style.display = "inline"
         
 
@@ -525,25 +525,31 @@ function repeatProject(){
     const projectMap = deSerialization(getLocalStorage(selectedProjectID))
 
     let deadline;
-    const mesure = projectMap.get("repeatMesure")
+    const measure = projectMap.get("repeatMeasure")
     const currentDate = new Date().toISOString()
     const repeatCount = parseInt(projectMap.get("repeatCount"))
     const currentDeadline = projectMap.get("deadlineDate")
-    const difference = differenceInHours(currentDeadline, currentDate)
+
+    let difference = differenceInHours(currentDeadline, currentDate)
 
     if(difference < 0){
-        if(mesure == "days"){
-            deadline = addDays(currentDeadline, repeatCount)
+        while(difference < 0){
+            if(measure === "days"){
+                deadline = addDays(currentDeadline, repeatCount)
+            }
+            else if(measure === "week"){
+                deadline = addWeeks(currentDeadline, repeatCount)
+            }
+            else if(measure === "month"){
+                deadline = addMonths(currentDeadline, repeatCount)
+            }
+            else if(measure === "year"){
+                deadline = addYears(currentDeadline, repeatCount)
+            }
+            currentDeadline = deadline
+            difference = differenceInHours(currentDeadline, currentDate)
         }
-        else if(mesure == "week"){
-            deadline = addWeeks(currentDeadline, repeatCount)
-        }
-        else if(mesure == "month"){
-            deadline = addMonths(currentDeadline, repeatCount)
-        }
-        else if(mesure == "year"){
-            deadline = addYears(currentDeadline, repeatCount)
-        }
+
         projectMap.set("deadlineDate", deadline)
         projectMap.set("previousDeadline", deadline)
     
