@@ -7,7 +7,9 @@
     --primaryColorScheme: orange;
     --primaryColorDarkScheme: rgb(194, 126, 0);
     --primaryTextColor: white;
+    --primaryTextColorReverse: black;
     --background: rgba(13, 16, 23, 255);
+    --backgroundReverse: rgb(255, 236, 199);
     --backgroundColorLight: rgba(18, 21, 28, 255);
     --calenderPicker: invert(1);
 }
@@ -16,7 +18,9 @@
     --primaryColorScheme: rgb(214, 142, 7);
     --primaryColorDarkScheme: rgb(194, 126, 0);
     --primaryTextColor: black;
+    --primaryTextColorReverse: white;
     --background: rgb(255, 236, 199);
+    --backgroundReverse: rgba(13, 16, 23, 255);
     --backgroundColorLight: white;
     --calenderPicker: invert(0);
 }
@@ -140,6 +144,39 @@ svg {
 
 .cancelBtnIcon:active {
     fill: red;
+}
+
+
+.notice {
+    height: 50px;
+    width: 320px;
+
+    border: 2px solid var(--primaryColorScheme);
+    border-radius: 20px;
+
+    background-color: var(--backgroundColorLight);
+
+    position: absolute;
+    right: 50px;
+    bottom: 150px;
+
+
+    opacity: 0;
+    transition: opacity 1s ease;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notice.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.notice p {
+    color: var(--primaryTextColor);
+    font-size: 1.3rem;
 }
 
 /* ********************************************************************************************************* */
