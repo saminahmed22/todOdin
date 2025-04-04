@@ -67,26 +67,26 @@ function createProjectSubmit(e){
     let deadline;
     if(formValues.get("projectType") == "repeating"){
         
-        const mesure = formValues.get("repeatMeasure")
+        const measure = formValues.get("repeatMeasure")
         const createDate = new Date().toISOString()
         const repeatCount = parseInt(formValues.get("repeatCount"))
         
-        if(mesure == "days"){
+        if(measure == "days"){
             deadline = addDays(createDate, repeatCount)
         }
-        else if(mesure == "week"){
+        else if(measure == "week"){
             deadline = addWeeks(createDate, repeatCount)
         }
-        else if(mesure == "month"){
+        else if(measure == "month"){
             deadline = addMonths(createDate, repeatCount)
         }
-        else if(mesure == "year"){
+        else if(measure == "year"){
             deadline = addYears(createDate, repeatCount)
         }
 
     }
     else{
-        const deadline = formValues.get("deadlineDate") != ""? new Date(formValues.get("deadlineDate")).toISOString() : null;
+        deadline = formValues.get("deadlineDate") != ""? new Date(formValues.get("deadlineDate")).toISOString() : null;
     }
     formValues.set("deadlineDate", deadline)
     formValues.set("previousDeadline", deadline)

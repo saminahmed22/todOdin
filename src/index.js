@@ -249,7 +249,7 @@ document.addEventListener("click", (event) => {
 
 const repeatSelection = document.getElementById("projectType");
 const repeatCount = document.getElementById("repeatCount");
-const repeatMesure = document.getElementById("repeatMesure");
+const repeatMeasure = document.getElementById("repeatMeasure");
 
 const projectDeadline = document.getElementById("projectDeadline");
 
@@ -258,13 +258,13 @@ repeatSelection.addEventListener("change", (e) => {
     
     if(selectedValue == "repeating"){
         repeatCount.style.display = "inline";
-        repeatMesure.style.display = "inline";
+        repeatMeasure.style.display = "inline";
 
         projectDeadline.style.display = "none"
     }
     else{
         repeatCount.style.display = "none";
-        repeatMesure.style.display = "none";
+        repeatMeasure.style.display = "none";
 
         projectDeadline.style.display = "inline"
     }
