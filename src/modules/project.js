@@ -414,7 +414,12 @@ function loadProjectMain(){
 
     const childs = Array.from(main.children)
     childs.forEach(child => {
-        child.style.display = "block";
+        if(child.classList.contains("todoBtnContainer") || child.classList.contains("todoListContainer")){
+            child.style.display = "flex";
+        }
+        else{
+            child.style.display = "block";
+        }
     })
 
     document.querySelector(".CTAText").style.display = "none";
