@@ -1,5 +1,5 @@
 import {format, differenceInDays, differenceInHours, addDays, addWeeks, addMonths, addYears} from 'date-fns'
-import {loadTodos} from "./todo";
+import {loadTodos, resetTodos} from "./todo";
 import {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage} from "./helper"
 
 let overlayDiv = document.querySelector(".overlay")
@@ -379,7 +379,7 @@ function projectListListener(){
                 div.classList.add("selectedProject")
             }
             selectedProjectID = div.id.slice(0, -4);
-
+    
             loadProjectMain();
             return selectedProjectID;
         })
@@ -443,7 +443,6 @@ function loadProjectMain(){
 
 
     if( deadlineDate != null && postponeDate == null){
-        // deadlineDate = projectMap.get("deadlineDate")
         deadlineDateModified = `Deadline: ${format(deadlineDate, "EEEE, MMMM dd, yyyy (h:mm a) | ")}${timeRemaining()}`;  
     }
     else if(postponeDate != null){
@@ -544,7 +543,7 @@ function repeatProject(){
         projectMap.set("previousDeadline", deadline)
     
         setLocalStorage(selectedProjectID, serialization(projectMap))
-
+        resetTodos()
         return true
     }
     return false
@@ -566,5 +565,6 @@ function showNotice(bool){
         }, 10000);
     }
 }
+
 // ************************************************************************************
 export {createProject, editProject, deleteProject, postpone, loadProjectList, projectListListener, selectedProjectID}
