@@ -352,6 +352,15 @@ function deleteTodoSubmission(e){
     todoDeleteForm.reset();
 }
 
-export {createTodo, editTodo, deleteTodo, loadTodos}
+
+function resetTodos(){
+    todoList.forEach(todo => {
+        todo.progress = false
+    })
+    setLocalStorage(selectedProjectID, serialization(projectMap))
+}
+
+
+export {createTodo, editTodo, deleteTodo, loadTodos, resetTodos}
 
 
