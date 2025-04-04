@@ -533,16 +533,16 @@ function repeatProject(){
 
     if(difference < 0){
         if(mesure == "days"){
-            deadline = addDays(currentDate, repeatCount)
+            deadline = addDays(currentDeadline, repeatCount)
         }
         else if(mesure == "week"){
-            deadline = addWeeks(currentDate, repeatCount)
+            deadline = addWeeks(currentDeadline, repeatCount)
         }
         else if(mesure == "month"){
-            deadline = addMonths(currentDate, repeatCount)
+            deadline = addMonths(currentDeadline, repeatCount)
         }
         else if(mesure == "year"){
-            deadline = addYears(currentDate, repeatCount)
+            deadline = addYears(currentDeadline, repeatCount)
         }
         projectMap.set("deadlineDate", deadline)
         projectMap.set("previousDeadline", deadline)
