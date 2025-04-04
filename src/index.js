@@ -250,6 +250,30 @@ document.addEventListener("click", (event) => {
 });
 
 
+const repeatSelection = document.getElementById("repeatSelect");
+const repeatCount = document.getElementById("repeatCount");
+const repeatMesure = document.getElementById("repeatMesure");
+
+const projectDeadline = document.getElementById("projectDeadline");
+
+repeatSelection.addEventListener("change", (e) => {
+    const selectedValue = e.target.value;
+    
+    if(selectedValue == "repeating"){
+        repeatCount.style.display = "inline";
+        repeatMesure.style.display = "inline";
+
+        projectDeadline.style.display = "none"
+    }
+    else{
+        repeatCount.style.display = "none";
+        repeatMesure.style.display = "none";
+
+        projectDeadline.style.display = "inline"
+    }
+})
+
+
 
 document.addEventListener("change", (e) => {
     if(e.target.matches("input[type='checkbox']")){
