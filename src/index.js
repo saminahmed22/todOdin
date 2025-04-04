@@ -250,7 +250,7 @@ document.addEventListener("click", (event) => {
 });
 
 
-const repeatSelection = document.getElementById("repeatSelect");
+const repeatSelection = document.getElementById("projectType");
 const repeatCount = document.getElementById("repeatCount");
 const repeatMesure = document.getElementById("repeatMesure");
 
