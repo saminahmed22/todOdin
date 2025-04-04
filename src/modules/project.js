@@ -380,7 +380,6 @@ function projectListListener(){
             }
             selectedProjectID = div.id.slice(0, -4);
 
-            loadTodos()
             loadProjectMain();
             return selectedProjectID;
         })
@@ -402,7 +401,6 @@ function loadNewProject(newProjectID){
         previousProject.classList.remove("selectedProject")
         newDiv.classList.add("selectedProject")
     }
-    loadTodos()
     loadProjectMain()
     return selectedProjectID;
 }
@@ -430,6 +428,14 @@ function loadProjectMain(){
     const createDate = projectMap.get("creationDate");
     const postponeDate = projectMap.get("postponeDate");
     const previousDeadline = projectMap.get("previousDeadline");
+
+    const projectType = projectMap.get("projectType")
+
+    let refreshStatus = null
+    if(projectType == "repeating"){
+        refreshStatus = repeatProject()
+    }
+    loadTodos()
 
     let deadlineDate = projectMap.get("deadlineDate");
     let deadlineDateModified;
@@ -494,7 +500,6 @@ function loadProjectMain(){
 
     const createDateModified = `Creation date: ${format(createDate, "EEEE, MMMM dd, yyyy (h:mm a)")}`;
 
-
     // main selectors
     const projectTitleMain = document.querySelector(".ProjectTitle")
     const projectDescMain = document.querySelector(".projectDesc")
@@ -505,7 +510,61 @@ function loadProjectMain(){
     projectDescMain.textContent = desc;
     creationDateMain.textContent = createDateModified;
     deadlineDateMain.textContent = deadlineDateModified;
+
+    showNotice(refreshStatus)
 }
 
+
+
+function repeatProject(){
+
+    const projectMap = deSerialization(getLocalStorage(selectedProjectID))
+
+    let deadline;
+    const mesure = projectMap.get("repeatMesure")
+    const currentDate = new Date().toISOString()
+    const repeatCount = parseInt(projectMap.get("repeatCount"))
+    const currentDeadline = projectMap.get("deadlineDate")
+    const difference = differenceInHours(currentDeadline, currentDate)
+
+    if(difference < 0){
+        if(mesure == "days"){
+            deadline = addDays(currentDate, repeatCount)
+        }
+        else if(mesure == "week"){
+            deadline = addWeeks(currentDate, repeatCount)
+        }
+        else if(mesure == "month"){
+            deadline = addMonths(currentDate, repeatCount)
+        }
+        else if(mesure == "year"){
+            deadline = addYears(currentDate, repeatCount)
+        }
+        projectMap.set("deadlineDate", deadline)
+        projectMap.set("previousDeadline", deadline)
+    
+        setLocalStorage(selectedProjectID, serialization(projectMap))
+
+        return true
+    }
+    return false
+}
+
+
+function showNotice(bool){
+    const notice = document.querySelector(".notice")
+    if(bool){
+        notice.classList.add("show");
+        setTimeout(() => {
+            notice.classList.remove("show");
+
+            notice.addEventListener("transitionend", function hideNotice() {
+                notice.style.visibility = "hidden";
+                notice.removeEventListener("transitionend", hideNotice);
+            }, { once: true });
+
+        }, 10000);
+    }
+}
 // ************************************************************************************
 export {createProject, editProject, deleteProject, postpone, loadProjectList, projectListListener, selectedProjectID}
