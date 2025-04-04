@@ -17,6 +17,13 @@ const postponeModal = document.querySelector(".postponeModal");
 const postponeForm = document.querySelector("#postponeForm");
 
 
+const repeatCount = document.getElementById("repeatCount");
+const repeatMesure = document.getElementById("repeatMesure");
+
+const projectDeadline = document.getElementById("projectDeadline");
+
+
+
 let selectedProjectID = null;
 
 
@@ -31,6 +38,11 @@ function createProject(){
         projectCreateModal.close();
         projectCreateForm.reset()
         overlayDiv.style.display = "none"
+
+        repeatCount.style.display = "none";
+        repeatMesure.style.display = "none";
+        projectDeadline.style.display = "inline"
+
         projectCreateForm.removeEventListener("submit", createProjectSubmit)
     })
 }
@@ -63,6 +75,13 @@ function createProjectSubmit(e){
     loadProjectList();
     loadNewProject(uniqueID);
     projectCreateModal.close();
+
+
+    repeatCount.style.display = "none";
+    repeatMesure.style.display = "none";
+    projectDeadline.style.display = "inline"
+        
+
     overlayDiv.style.display = "none"
     projectCreateForm.reset();
 }
@@ -296,16 +315,20 @@ function loadProjectList(){
         const projectListTitle = document.createElement("h5")
         projectListTitle.textContent = projectMap.get("title");
 
+        if(projectMap.get("projectType") == "repeating"){
+            const repeatIcon = '<svg class = "repeatIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-80 120-240l160-160 56 58-62 62h406v-160h80v240H274l62 62-56 58Zm-80-440v-240h486l-62-62 56-58 160 160-160 160-56-58 62-62H280v160h-80Z"/></svg>'
+            projectListTitle.innerHTML += repeatIcon
+        }
 
         const projectListPriority = document.createElement("div");
         projectListPriority.classList.add("pirorityMark");
 
-        
         const pirority = projectMap.get("projectPriority");
 
 
         let colorCode = pirority == "top" ? "red" : (pirority == "low" ? "green" : "gold");
         projectListPriority.style.backgroundColor = colorCode;
+
 
         projectListDiv.appendChild(projectListTitle)
         projectListDiv.appendChild(projectListPriority)
