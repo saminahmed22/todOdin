@@ -113,7 +113,7 @@
 <div class="overlay">
 
     <!-- Modal for project creation form -->
-    <dialog class="createProjectModal formModal" open>
+    <dialog class="createProjectModal formModal">
         <form id="createProjectForm" action="">
 
             <h3>Create a project</h3>
@@ -137,11 +137,11 @@
 
             <label class="FormTitle projectDeadline" for="projectDeadline">Deadline</label>
             <div class="repeat">
-                <select name="repeatSelect" id="repeatSelect">
+                <select name="projectType" id="projectType">
                     <option value="non-repeating" selected>Non-repeating</option>
                     <option value="repeating">Repeating</option>
                 </select>
-                <input type="number" id="repeatCount" placeholder="Repeat every: 1(default)">
+                <input type="number" name="repeatCount" id="repeatCount" value=1>
                 <select name="repeatMesure" id="repeatMesure">
                     <option value="days" selected>Days</option>
                     <option value="week">Week</option>
