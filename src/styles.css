@@ -290,22 +290,37 @@ main {
     flex-direction: column;
 }
 
+.projectTitleDiv {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(100px, 6fr) 2fr;
+}
+
+.title {
+    grid-column: 1/2;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.actBtns {
+    grid-column: 2/3;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3vw;
+}
+
 .ProjectTitle {
     color: var(--primaryColorScheme);
     font-size: 3.5rem;
     font-weight: 600;
-    padding: 40px 0 0 80px;
+    padding: 40px 0 0 4.5vw;
     width: 700px;
     word-wrap: break-word;
 }
 
-.actBtns {
-    position: absolute;
-    right: 100px;
-    top: 50px;
-    display: flex;
-    gap: 50px;
-}
+
 
 .postponeBtn {
     height: 30px;
@@ -353,6 +368,26 @@ main {
     width: 900px;
 }
 
+.todoBtnContainer {
+    display: flex;
+    height: 50px;
+    width: 100%;
+}
+
+.todoBtnDiv {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.todoBtnContainer .empty {
+    height: 100%;
+    width: 20%;
+}
+
+
 .addTodoBtn {
     height: 30px;
     width: 100px;
@@ -360,9 +395,6 @@ main {
     border-radius: 5px;
     background: transparent;
     color: var(--primaryColorScheme);
-    position: absolute;
-    right: 300px;
-
 }
 
 .addTodoBtn:hover {
@@ -370,10 +402,19 @@ main {
     border-color: var(--primaryTextColor);
 }
 
+.todoListContainer {
+    height: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10vw;
+}
+
+
 .todoList {
     height: 450px;
     width: fit-content;
-    margin: 100px 250px;
     overflow-y: auto;
     overflow-x: hidden;
 }
