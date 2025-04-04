@@ -97,7 +97,7 @@ select {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.664);
-    display: inline;
+    display: none;
 }
 
 body {
@@ -231,8 +231,12 @@ li {
     font-size: 1.2rem;
     font-weight: 500;
     word-wrap: break-word;
-    max-width: 300px;
+    max-width: 250px;
     min-width: 150px;
+}
+
+.repeatIcon {
+    height: 15px;
 }
 
 .pirorityMark {
@@ -521,7 +525,7 @@ main {
     display: inline;
 }
 
-#repeatSelect {
+#projectType {
     width: 120px;
     height: 25px;
     margin: 0 0 10px 5px;
