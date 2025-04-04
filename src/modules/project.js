@@ -1,4 +1,4 @@
-import {format, differenceInDays, differenceInHours, addDays} from 'date-fns'
+import {format, differenceInDays, differenceInHours, addDays, addWeeks, addMonths, addYears} from 'date-fns'
 import {loadTodos} from "./todo";
 import {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage} from "./helper"
 
@@ -64,11 +64,33 @@ function createProjectSubmit(e){
     formValues.set("todos", new Map());
     formValues.set("postponeDate", null);
 
-    const updatedDeadline = formValues.get("deadlineDate") != ""? new Date(formValues.get("deadlineDate")).toISOString() : null;
+    let deadline;
+    if(formValues.get("projectType") == "repeating"){
+        
+        const mesure = formValues.get("repeatMesure")
+        const createDate = new Date().toISOString()
+        const repeatCount = parseInt(formValues.get("repeatCount"))
+        
+        if(mesure == "days"){
+            deadline = addDays(createDate, repeatCount)
+        }
+        else if(mesure == "week"){
+            deadline = addWeeks(createDate, repeatCount)
+        }
+        else if(mesure == "month"){
+            deadline = addMonths(createDate, repeatCount)
+        }
+        else if(mesure == "year"){
+            deadline = addYears(createDate, repeatCount)
+        }
 
-    formValues.set("deadlineDate", updatedDeadline)
-    formValues.set("previousDeadline", updatedDeadline)
-
+    }
+    else{
+        const deadline = formValues.get("deadlineDate") != ""? new Date(formValues.get("deadlineDate")).toISOString() : null;
+    }
+    formValues.set("deadlineDate", deadline)
+    formValues.set("previousDeadline", deadline)
+    
     setLocalStorage(uniqueID, serialization(formValues))
 
 
