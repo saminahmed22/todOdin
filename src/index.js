@@ -160,40 +160,43 @@ toggleBtn.addEventListener("click", () => {
 
 
 const dummyProject = new Map([
-    ["title", "World Domination"],
-    ["description", "Gather cats do stuffs Idk"],
-    ["deadlineDate", "2026-04-01T00:00:00.000Z"],
-    ["projectPriority", "top"],
-    ["creationDate", "2025-04-02T21:51:01.385Z"],
-    ["uniqueID", "project_000001"],
-    ["todos", new Map([
-        ["Todo_1", {
-            title: "Gather cats",
-            desc: "those shits won't listen so force them ig",
-            priority: "top",
-            progress: false
-        }],
-        ["Todo_2", {
-            title: "PET THEM",
-            desc: "pet pet pet",
-            priority: "top",
-            progress: false
-        }],
-        ["Todo_4", {
-            title: "Get a life",
-            desc: "meh",
-            priority: "normal",
-            progress: false
-        }],
-        ["Todo_3", {
-            title: "oh yeah, world domination",
-            desc: "we'll see that later",
-            priority: "low",
-            progress: false
-        }]
-    ])],
-    ["postponeDate", null],
-    ["previousDeadline", "2026-04-01T00:00:00.000Z"]
+  ["title", "World Domination"],
+  ["description", "Gather cats do stuffs IDK"],
+  ["projectType", "non-repeating"],
+  ["repeatCount", "1"],
+  ["repeatMeasure", "days"],
+  ["deadlineDate", "2026-04-06T17:59:59.999Z"],
+  ["projectPriority", "top"],
+  ["creationDate", "2025-04-05T20:35:05.710Z"],
+  ["uniqueID", "project_000001"],
+  ["todos", new Map([
+    ["Todo_1", {
+      title: "Gather cats",
+      desc: "those shits won't listen so force them ig",
+      priority: "top",
+      progress: false
+    }],
+    ["Todo_2", {
+      title: "PET THEM!",
+      desc: "pet pet pet",
+      priority: "top",
+      progress: false
+    }],
+    ["Todo_3", {
+      title: "Get a life",
+      desc: "meh",
+      priority: "normal",
+      progress: false
+    }],
+    ["Todo_4", {
+      title: "oh yeah, world domination",
+      desc: "we'll see that later",
+      priority: "low",
+      progress: false
+    }]
+  ])],
+  ["postponeDate", null],
+  ["previousDeadline", "2026-04-06T17:59:59.999Z"]
 ]);
 
 // Check if the app has already been initialized
