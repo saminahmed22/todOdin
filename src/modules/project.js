@@ -1,4 +1,4 @@
-import {format, differenceInDays, differenceInHours, addDays, addWeeks, addMonths, addYears} from 'date-fns'
+import {format, differenceInDays, differenceInHours, addDays, addWeeks, addMonths, addYears, endOfDay} from 'date-fns'
 import {loadTodos, resetTodos} from "./todo";
 import {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage} from "./helper"
 
@@ -68,7 +68,7 @@ function createProjectSubmit(e){
     if(formValues.get("projectType") == "repeating"){
         
         const measure = formValues.get("repeatMeasure")
-        const createDate = new Date().toISOString()
+        const createDate = endOfDay(new Date()).toISOString()
         const repeatCount = parseInt(formValues.get("repeatCount"))
         
         if(measure == "days"){
@@ -86,7 +86,7 @@ function createProjectSubmit(e){
 
     }
     else{
-        deadline = formValues.get("deadlineDate") != ""? new Date(formValues.get("deadlineDate")).toISOString() : null;
+        deadline = formValues.get("deadlineDate") != ""? endOfDay(new Date(formValues.get("deadlineDate"))).toISOString() : null;
     }
     formValues.set("deadlineDate", deadline)
     formValues.set("previousDeadline", deadline)
@@ -492,8 +492,8 @@ function loadProjectMain(){
             }
         }
         else{
-            if(hourDiff < 23){
-                if(hourDiff <= 1){
+            if(Math.abs(hourDiff) <= 23){
+                if(Math.abs(hourDiff) <= 1){
                     return `Deadline has passed ${Math.abs(hourDiff)} hour ago`
                 }
                 else{
@@ -501,7 +501,12 @@ function loadProjectMain(){
                 }
             }
             else{
-                return `Deadline has passed ${Math.abs(diff)} days ago`
+                if(Math.abs(diff) <= 1){
+                    return `Deadline has passed ${Math.abs(diff)} day ago`
+                }
+                else{
+                    return `Deadline has passed ${Math.abs(diff)} days ago`
+                }
             }   
         }
     }
