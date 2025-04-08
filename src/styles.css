@@ -425,7 +425,7 @@ main {
 
 .ToDo {
     height: 50px;
-    width: 440px;
+    width: 480px;
 
     min-height: 50px;
     min-width: 440px;
@@ -489,7 +489,7 @@ main {
 .todoTitle {
     font-size: 1rem;
     font-weight: 400;
-    margin: 10px 0px 10px 0;
+    margin: 10px 40px 10px 0;
 }
 
 #todoCheck {
