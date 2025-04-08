@@ -222,8 +222,7 @@ let todoCardClass;
 document.addEventListener("click", (event) => {
     // project event
     if(event.target.matches(".addProjectBtn")){
-        createProject();
-        
+        createProject(); 
     }
     else if(event.target.closest(".editProjectBtn")){
         editProject();
@@ -234,6 +233,7 @@ document.addEventListener("click", (event) => {
     else if(event.target.matches(".postponeBtn")){
         postpone();
     }
+
 
     // todo event
     else if (event.target.matches(".addTodoBtn")){
@@ -293,5 +293,6 @@ document.addEventListener("change", (e) => {
         loadTodos()
     }
 })
+
 
 export{todoCardClass}

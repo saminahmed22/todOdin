@@ -272,7 +272,8 @@ li {
 }
 
 .repeatIcon {
-    height: 15px;
+    height: 12px;
+    margin-left: 5px;
 }
 
 .pirorityMark {
