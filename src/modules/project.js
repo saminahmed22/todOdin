@@ -1,4 +1,4 @@
-import {format, differenceInDays, differenceInHours, addDays, addWeeks, addMonths, addYears, endOfDay} from 'date-fns'
+import {format, differenceInDays, differenceInHours, addDays, addWeeks, addMonths, addYears, endOfDay, intervalToDuration, startOfDay} from 'date-fns'
 import {loadTodos, resetTodos} from "./todo";
 import {serialization, deSerialization, setLocalStorage, getLocalStorage, deleteLocalStorage} from "./helper"
 
@@ -68,7 +68,7 @@ function createProjectSubmit(e){
     if(formValues.get("projectType") == "repeating"){
         
         const measure = formValues.get("repeatMeasure")
-        const createDate = endOfDay(new Date()).toISOString()
+        const createDate = startOfDay(new Date()).toISOString()
         const repeatCount = parseInt(formValues.get("repeatCount"))
         
         if(measure == "days"){
@@ -225,7 +225,7 @@ function deleteProjectSubmit(e){
 
 
 // ****************************************************************************************************************************
-
+let currentDeadline;
 function postpone(){
 
     postponeModal.show();
@@ -233,7 +233,7 @@ function postpone(){
 
     const projectMap =  deSerialization(getLocalStorage(selectedProjectID))
 
-    const currentDeadline = projectMap.get("deadlineDate") ? projectMap.get("deadlineDate") : new Date();
+    currentDeadline = projectMap.get("deadlineDate") ? projectMap.get("deadlineDate") : new Date();
     projectMap.set("previousDeadline", currentDeadline);
  
 
@@ -243,7 +243,7 @@ function postpone(){
     });
 
     postponeForm.removeEventListener("submit", postponeSubmission)
-    postponeForm.addEventListener("submit", (e) => postponeSubmission(e, currentDeadline))
+    postponeForm.addEventListener("submit", postponeSubmission)
 
 
 
@@ -256,7 +256,7 @@ function postpone(){
     })
 }
 
-function postponeSubmission(e, currentDeadline){
+function postponeSubmission(e){
     e.preventDefault();
 
     const projectMap =  deSerialization(getLocalStorage(selectedProjectID))
@@ -424,109 +424,97 @@ function loadProjectMain(){
 
     document.querySelector(".CTAText").style.display = "none";
 
-
-
     let projectMap = deSerialization(getLocalStorage(selectedProjectID))
 
     const title = projectMap.get("title");
     const desc = projectMap.get("description");
     const createDate = projectMap.get("creationDate");
-    const postponeDate = projectMap.get("postponeDate");
+    const projectType = projectMap.get("projectType");
 
-
-    const projectType = projectMap.get("projectType")
 
     let refreshStatus = null
     if(projectType == "repeating"){
-        refreshStatus = repeatProject()
+        refreshStatus = repeatProject();
     }
     loadTodos()
 
     // get refreshed map
     projectMap = deSerialization(getLocalStorage(selectedProjectID))
 
-    let deadlineDate = projectMap.get("deadlineDate");
-    const previousDeadline = projectMap.get("previousDeadline");
-    let deadlineDateModified;
-
-
-
-    if( deadlineDate != null && postponeDate == null){
-        deadlineDateModified = `Deadline: ${format(deadlineDate, "EEEE, MMMM dd, yyyy (h:mm a) | ")}${timeRemaining()}`;  
-    }
-    else if(postponeDate != null){
-
-        function difference(){
-            const diff = differenceInDays(postponeDate, previousDeadline);
-            if(diff <= 1){
-                return `${diff} day`
-            }
-            else{
-                return `${diff} days`
-            }
-        }
-
-        deadlineDateModified = `Deadline(Postponed for ${difference()}): ${format(deadlineDate, "EEEE, MMMM dd, yyyy (h:mm a) | ")}${timeRemaining()}`;
-    }
-    else{
-        deadlineDateModified = "";
-    }
-    
-
-    function timeRemaining() {
-        const diff = differenceInDays(deadlineDate, new Date());
-        const hourDiff = differenceInHours(deadlineDate, new Date())
-        if(diff > 1){
-            return `${diff} days left`
-        }
-        else if(diff == 1){
-            return `${diff} day left`
-        }
-        else if(diff == 0 && hourDiff > 0){
-
-            if(hourDiff <= 1){
-                return `${hourDiff} hour left`
-            }
-            else{
-                return `${hourDiff} hours left`
-            }
-        }
-        else{
-            if(Math.abs(hourDiff) <= 23){
-                if(Math.abs(hourDiff) <= 1){
-                    return `Deadline has passed ${Math.abs(hourDiff)} hour ago`
-                }
-                else{
-                    return `Deadline has passed ${Math.abs(hourDiff)} hours ago`
-                }
-            }
-            else{
-                if(Math.abs(diff) <= 1){
-                    return `Deadline has passed ${Math.abs(diff)} day ago`
-                }
-                else{
-                    return `Deadline has passed ${Math.abs(diff)} days ago`
-                }
-            }   
-        }
-    }
 
     const createDateModified = `Creation date: ${format(createDate, "EEEE, MMMM dd, yyyy (h:mm a)")}`;
+    deadline()
 
     // main selectors
     const projectTitleMain = document.querySelector(".ProjectTitle")
     const projectDescMain = document.querySelector(".projectDesc")
     const creationDateMain = document.querySelector(".projectDate")
-    const deadlineDateMain = document.querySelector(".projectDeadlineDate")
+
 
     projectTitleMain.textContent = title;
     projectDescMain.textContent = desc;
     creationDateMain.textContent = createDateModified;
-    deadlineDateMain.textContent = deadlineDateModified;
 
     showNotice(refreshStatus)
 }
 
+
+function deadline(){
+    if(!selectedProjectID) return;
+
+    const projectMap = deSerialization(getLocalStorage(selectedProjectID))
+
+    const postponeDate = projectMap.get("postponeDate");
+    const deadlineDate = projectMap.get("deadlineDate");
+    const previousDeadline = projectMap.get("previousDeadline");
+
+    let deadlineString;
+
+    if( deadlineDate != null && postponeDate == null){
+        deadlineString = deadlineDate ? `Deadline: ${format(deadlineDate, "EEEE, MMMM dd, yyyy (h:mm a)")} | ${timeRemaining()}` : '';
+    }
+    else{
+        function difference(){
+            const difference = intervalToDuration({ start: previousDeadline, end: deadlineDate })
+            for(let [key, value] of Object.entries(difference)){
+                if(value){
+                    return `${value} ${value > 1 ? key : key.slice(0, -1)}`
+                }
+            }
+        }
+        deadlineString = `Deadline(has been Postponed for ${difference()}): ${format(deadlineDate, "EEEE, MMMM dd, yyyy (h:mm a)")} | ${timeRemaining()}`;
+    }
+
+
+    function timeRemaining() {
+
+        const now = new Date().toISOString()
+        const interval = intervalToDuration({ start: now, end: deadlineDate }) 
+
+        const isPassed = now > deadlineDate;
+
+        console.clear()
+        console.log(JSON.stringify(interval))
+
+        if(!isPassed){
+            for(let [key, value] of Object.entries(interval)){
+                if(value){
+                    return `${value} ${value > 1 ? key : key.slice(0, -1)} left`
+                }
+            }
+        }
+        else{
+            for(let [key, value] of Object.entries(interval)){
+                if(value){
+                    return `Deadline has passed ${Math.abs(value)} ${Math.abs(value) > 1 ? key : key.slice(0, -1)} ago`
+                }
+            }
+        }
+    }
+    const deadlineDateMain = document.querySelector(".projectDeadlineDate")
+    deadlineDateMain.textContent = deadlineString;
+}
+setInterval(deadline, 1000);
 
 
 function repeatProject(){
@@ -564,8 +552,14 @@ function repeatProject(){
     
         setLocalStorage(selectedProjectID, serialization(projectMap))
         resetTodos(selectedProjectID)
+
         return true
     }
+
+    const projectRepeat = document.querySelector(".projectRepeat")
+    projectRepeat.style.display = "inline";
+    projectRepeat.textContent = `Repeats every ${repeatCount} ${measure == "days" && repeatCount > 1 ? measure : measure.slice(0, -1)}`
+
     return false
 }
 
