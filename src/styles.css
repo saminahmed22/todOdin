@@ -351,7 +351,8 @@ main {
 }
 
 .projectDate,
-.projectDeadlineDate {
+.projectDeadlineDate,
+.projectRepeat {
     color: var(--primaryTextColor);
     padding: 5px 200px;
     font-weight: 500;
@@ -359,6 +360,10 @@ main {
 
 .projectDeadlineDate {
     color: crimson;
+}
+
+.projectRepeat {
+    display: none;
 }
 
 .projectDesc {
