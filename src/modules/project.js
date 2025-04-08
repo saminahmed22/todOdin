@@ -493,9 +493,6 @@ function deadline(){
 
         const isPassed = now > deadlineDate;
 
-        console.clear()
-        console.log(JSON.stringify(interval))
-
         if(!isPassed){
             for(let [key, value] of Object.entries(interval)){
                 if(value){
