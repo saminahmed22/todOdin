@@ -353,7 +353,10 @@ function deleteTodoSubmission(e){
 }
 
 
-function resetTodos(){
+function resetTodos(selectedProjectID){
+    
+    projectMap = deSerialization(getLocalStorage(selectedProjectID))
+    todoList = projectMap.get("todos");
     todoList.forEach(todo => {
         todo.progress = false
     })
