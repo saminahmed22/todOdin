@@ -426,13 +426,13 @@ function loadProjectMain(){
 
 
 
-    const projectMap = deSerialization(getLocalStorage(selectedProjectID))
+    let projectMap = deSerialization(getLocalStorage(selectedProjectID))
 
     const title = projectMap.get("title");
     const desc = projectMap.get("description");
     const createDate = projectMap.get("creationDate");
     const postponeDate = projectMap.get("postponeDate");
-    const previousDeadline = projectMap.get("previousDeadline");
+
 
     const projectType = projectMap.get("projectType")
 
@@ -442,7 +442,11 @@ function loadProjectMain(){
     }
     loadTodos()
 
+    // get refreshed map
+    projectMap = deSerialization(getLocalStorage(selectedProjectID))
+
     let deadlineDate = projectMap.get("deadlineDate");
+    const previousDeadline = projectMap.get("previousDeadline");
     let deadlineDateModified;
 
 
@@ -528,7 +532,7 @@ function repeatProject(){
     const measure = projectMap.get("repeatMeasure")
     const currentDate = new Date().toISOString()
     const repeatCount = parseInt(projectMap.get("repeatCount"))
-    const currentDeadline = projectMap.get("deadlineDate")
+    let currentDeadline = projectMap.get("deadlineDate")
 
     let difference = differenceInHours(currentDeadline, currentDate)
 
@@ -550,11 +554,11 @@ function repeatProject(){
             difference = differenceInHours(currentDeadline, currentDate)
         }
 
-        projectMap.set("deadlineDate", deadline)
-        projectMap.set("previousDeadline", deadline)
+        projectMap.set("deadlineDate", deadline.toISOString())
+        projectMap.set("previousDeadline", deadline.toISOString())
     
         setLocalStorage(selectedProjectID, serialization(projectMap))
-        resetTodos()
+        resetTodos(selectedProjectID)
         return true
     }
     return false
@@ -564,16 +568,14 @@ function repeatProject(){
 function showNotice(bool){
     const notice = document.querySelector(".notice")
     if(bool){
+        notice.style.visibility = "visible";
         notice.classList.add("show");
         setTimeout(() => {
             notice.classList.remove("show");
-
-            notice.addEventListener("transitionend", function hideNotice() {
-                notice.style.visibility = "hidden";
-                notice.removeEventListener("transitionend", hideNotice);
-            }, { once: true });
-
         }, 10000);
+        setTimeout(() => {
+            notice.style.visibility = "hidden";
+        }, 11000);
     }
 }
 
